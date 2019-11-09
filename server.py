@@ -14,7 +14,21 @@ def create_app():
 
     @app.route('/')
     def index():
-        return render_template('./index.html')
+        nodes = [
+           {'title': '📚 Bücherregal',
+            'codeOn': '1361',
+            'codeOff': '1364',
+            },
+           {'title': 'Wohnzimmer-Ecke',
+            'codeOn': '5201',
+            'codeOff': '5204',
+            },
+           {'title': 'Flur-Ecke',
+            'codeOn': '4433',
+            'codeOff': '4436',
+            },
+        ]
+        return render_template('./index.html', nodes=nodes)
 
     @app.route('/send')
     def sendcode():

@@ -34,26 +34,14 @@
   <div class="container-fluid">
     <br/>
 
-    <h2>📚 Bücherregal</h2>
+    {% for node in nodes %}
+    <h2>{{ node.title }}</h2>
     <div class="btn-group btn-group-lg col-md-12" role="group">
-      <button type="button" class="btn btn-success col-md-6" onclick="sendCode(1361)">An</button>
-      <button type="button" class="btn btn-danger col-md-6" onclick="sendCode(1364)">Aus</button>
+      <button type="button" class="btn btn-success col-md-6" onclick="sendCode({{ node.codeOn }})">An</button>
+      <button type="button" class="btn btn-danger col-md-6" onclick="sendCode({{ node.codeOff }})">Aus</button>
     </div>
     <br/><br/>
-
-    <h2>💡 Flurecke</h2>
-    <div class="btn-group btn-group-lg col-md-12" role="group">
-      <button type="button" class="btn btn-success col-md-6" onclick="sendCode(4433)">An</button>
-      <button type="button" class="btn btn-danger col-md-6" onclick="sendCode(4436)">Aus</button>
-    </div>
-    <br/><br/>
-
-    <h2>🍽️ Esstischlampe</h2>
-    <div class="btn-group btn-group-lg col-md-12" role="group">
-      <button type="button" class="btn btn-success col-md-6" onclick="sendCode(5201)">An</button>
-      <button type="button" class="btn btn-danger col-md-6" onclick="sendCode(5204)">Aus</button>
-    </div>
-    <br/><br>
+    {% endfor %}
 
     <div class="card">
       <div class="card-body">
