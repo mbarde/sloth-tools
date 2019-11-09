@@ -37,8 +37,8 @@
     {% for node in nodes %}
     <h2>{{ node.title }}</h2>
     <div class="btn-group btn-group-lg col-md-12" role="group">
-      <button type="button" class="btn btn-success col-md-6" onclick="sendCode({{ node.codeOn }})">An</button>
-      <button type="button" class="btn btn-danger col-md-6" onclick="sendCode({{ node.codeOff }})">Aus</button>
+      <button type="button" class="btn btn-success col-md-6" onclick="sendCode({{ node.codeOn }}, {{ node.iterations }})">An</button>
+      <button type="button" class="btn btn-danger col-md-6" onclick="sendCode({{ node.codeOff }}, {{ node.iterations }})">Aus</button>
     </div>
     <br/><br/>
     {% endfor %}
@@ -59,9 +59,9 @@
       }
     }
 
-    function sendCode(code) {
+    function sendCode(code, iterations) {
       setButtonsDisabledState(true);
-      var url = 'http://192.168.178.61:5000/send?code=' + code;
+      var url = 'http://192.168.178.61:5000/send?code=' + code + '&iterations=' + iterations;
       var xhttp = new XMLHttpRequest();
       xhttp.open('GET', url, true);
       xhttp.onreadystatechange = function() {

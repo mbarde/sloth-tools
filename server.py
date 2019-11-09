@@ -18,14 +18,17 @@ def create_app():
            {'title': '📚 Bücherregal',
             'codeOn': '1361',
             'codeOff': '1364',
+            'iterations': '3',
             },
            {'title': 'Wohnzimmer-Ecke',
             'codeOn': '5201',
             'codeOff': '5204',
+            'iterations': '3',
             },
            {'title': 'Flur-Ecke',
             'codeOn': '4433',
             'codeOff': '4436',
+            'iterations': '10',
             },
         ]
         return render_template('./index.html', nodes=nodes)
@@ -34,16 +37,14 @@ def create_app():
     def sendcode():
         # calls C++
         code = request.args.get('code', '0')
+        iterations = int(request.args.get('iterations', 1))
         progPath = '/home/ubuntu/433Utils/RPi_utils/codesend'
         args = ['sudo', progPath, code]
         FNULL = open(os.devnull, 'w')
-        proc = subprocess.Popen(args, stdout=FNULL)
-        proc.wait()
-        proc = subprocess.Popen(args, stdout=FNULL)
-        proc.wait()
-        proc = subprocess.Popen(args, stdout=FNULL)
-        proc.wait()
-        return f'send: {escape(code)}!'
+        for i in range(1, iterations):
+            proc = subprocess.Popen(args, stdout=FNULL)
+            proc.wait()
+        return f'send ({escape(iterations)}x): {escape(code)}!'
 
     @app.route('/webcam')
     def webcam():
