@@ -64,10 +64,25 @@
   </div>
 
   <script>
+    function setButtonsDisabledState(disabled) {
+      var els = document.getElementsByTagName('button');
+      for (var i = 0; i < els.length; i++) {
+        els[i].disabled = disabled;
+      }
+    }
+
     function sendCode(code) {
+      setButtonsDisabledState(true);
       var url = 'http://192.168.178.61:5000/send?code=' + code;
       var xhttp = new XMLHttpRequest();
       xhttp.open('GET', url, true);
+      xhttp.onreadystatechange = function() {
+        setButtonsDisabledState(false);
+        if (this.readyState !== 4 && this.status !== 200) {
+          console.error('Request failed:');
+          console.error(this);
+        }
+      };
       xhttp.send();
     }
   </script>
