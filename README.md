@@ -5,6 +5,13 @@ sudo apt install python3-flask
 sudo apt-get install python3-opencv
 ```
 
+Setup databse:
+
+```
+export FLASK_APP=server.py
+flask init-db
+```
+
 ## Run in dev mode:
 
 ```

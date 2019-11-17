@@ -12,39 +12,54 @@ import subprocess
 def create_app():
     app = Flask(__name__, template_folder='/home/ubuntu/server')
 
+    import db
+    db.init_app(app)
+
     @app.route('/')
     def index():
-        nodes = [
-           {'title': '📚 Bücherregal',
-            'codeOn': '1361',
-            'codeOff': '1364',
-            'iterations': '3',
-            },
-           {'title': 'Wohnzimmer-Ecke',
-            'codeOn': '5201',
-            'codeOff': '5204',
-            'iterations': '3',
-            },
-           {'title': 'Flur-Ecke',
-            'codeOn': '4433',
-            'codeOff': '4436',
-            'iterations': '10',
-            },
-        ]
+        import db
+        db = db.get_db()
+        nodes = db.execute('SELECT * FROM node').fetchall()
         return render_template('./index.html', nodes=nodes)
 
-    @app.route('/send')
-    def sendcode():
-        # calls C++
-        code = request.args.get('code', '0')
-        iterations = int(request.args.get('iterations', 1))
+    def sendCode(code, iterations):
         progPath = '/home/ubuntu/433Utils/RPi_utils/codesend'
         args = ['sudo', progPath, code]
         FNULL = open(os.devnull, 'w')
         for i in range(1, iterations):
             proc = subprocess.Popen(args, stdout=FNULL)
             proc.wait()
-        return f'send ({escape(iterations)}x): {escape(code)}!'
+        return f'sent ({escape(iterations)}x): {escape(code)}!'
+
+    def getNodeById(nodeId):
+        import db
+        db = db.get_db()
+        node = db.execute('SELECT * FROM node WHERE id = ?', nodeId).fetchone()
+        return node
+
+    def setNodeState(nodeId, state):
+        import db
+        db = db.get_db()
+        res = db.execute('UPDATE node SET state = ? WHERE id = ?;', (state, nodeId))
+        db.commit()
+
+    @app.route('/on')
+    def switchOn():
+        nodeId = request.args.get('id')
+        node = getNodeById(nodeId)
+        res = sendCode(node['codeOn'], node['iterations'])
+        if len(res) > 0:
+            setNodeState(nodeId, 1)
+        return res
+
+    @app.route('/off')
+    def switchOff():
+        nodeId = request.args.get('id')
+        node = getNodeById(nodeId)
+        res = sendCode(node['codeOff'], node['iterations'])
+        if len(res) > 0:
+            setNodeState(nodeId, 0)
+        return res
 
     @app.route('/webcam')
     def webcam():
