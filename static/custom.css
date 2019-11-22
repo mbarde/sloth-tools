@@ -1,0 +1,42 @@
+body {
+  margin: 0;
+}
+
+div.container-nodes {
+  padding: 20px;
+}
+
+div.head {
+  background-color: #B4D7A2;
+  padding: 5px;
+}
+
+div.logo {
+  width: 275px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+div.logo img {
+  width: 100px;
+  margin-right: 10px;
+}
+
+div.logo span {
+  top: 13px;
+  font-size: 2rem;
+  position: absolute;
+  font-style: italic;
+  font-family: 'Amatic SC', cursive;
+}
+
+div.card {
+  width: 640px;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+div.card img {
+  max-width: 100%;
+}

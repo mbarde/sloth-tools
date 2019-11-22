@@ -5,120 +5,51 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>Home control</title>
-  <meta name="description" content="Home control">
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ title }}">
   <meta name="author" content="Matthias Barde">
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <!--<link rel="stylesheet" href="css/styles.css?v=1.0">-->
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
+  <link rel="manifest" href="/static/site.webmanifest">
+  <link rel="mask-icon" href="/static/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#2b5797">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="static/switch.css?v=1.0">
+  <link rel="stylesheet" href="static/custom.css?v=0.1">
+  <link href="https://fonts.googleapis.com/css?family=Amatic+SC&display=swap" rel="stylesheet">
 </head>
 
 <body>
-  <style>
-    h2 {
-      text-align: center;
-    }
-
-    div.card {
-      width: 640px;
-      max-width: 100%;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    div.card img {
-      max-width: 100%;
-    }
-
-  /* The switch - the box around the slider */
-  .switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-  }
-
-  /* Hide default HTML checkbox */
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-  /* The slider */
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
-
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
-
-  input:checked + .slider {
-    background-color: #2196F3;
-  }
-
-  input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
-  }
-
-  input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-  }
-
-  /* Rounded sliders */
-  .slider.round {
-    border-radius: 34px;
-  }
-
-  .slider.round:before {
-    border-radius: 50%;
-  }
-
-  .label-for-switch {
-    font-size: 2rem;
-    margin-top: -8px;
-    margin-left: 15px;
-    cursor: pointer;
-  }
-  </style>
-
   <div class="container-fluid">
+    <div class="head">
+      <div class="logo">
+        <img src="/static/apple-touch-icon.png"/>
+        <span>just be a<br/>happy sofa sloth :)</span>
+      </div>
+    </div>
     <br/>
-    {% for node in nodes %}
-    <label class="switch" style="float: left">
-      <input type="checkbox" {{ 'checked' if node.state else '' }}
-             id="switch-{{ node.id }}"
-             onclick="checkSwitch(this)" node-id="{{ node.id }}" />
-      <span class="slider round"></span>
-    </label>
-    <label for="switch-{{ node.id }}" class="label-for-switch">{{ node.title }}</label>
-    <br style="clear: both" /><br />
-    {% endfor %}
 
-    <div class="card">
+    <div class="container-nodes">
+      {% for node in nodes %}
+        <label class="switch" style="float: left">
+          <input type="checkbox" {{ 'checked' if node.state else '' }}
+                 id="switch-{{ node.id }}"
+                 onclick="checkSwitch(this)" node-id="{{ node.id }}" />
+          <span class="slider round"></span>
+        </label>
+        <label for="switch-{{ node.id }}" class="label-for-switch">{{ node.title }}</label>
+        <br style="clear: both" /><br />
+      {% endfor %}
+    </div>
+
+    <!--<div class="card">
       <div class="card-body">
         <img src="webcam"/>
       </div>
-    </div>
+    </div>-->
   </div>
 
   <script>

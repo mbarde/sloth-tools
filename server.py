@@ -2,6 +2,7 @@ from flask import escape
 from flask import render_template
 from flask import request
 from flask import send_file
+from flask import send_from_directory
 from flask import Flask
 
 import cv2
@@ -10,7 +11,9 @@ import subprocess
 
 
 def create_app():
-    app = Flask(__name__, template_folder='/home/ubuntu/server')
+    app = Flask(__name__,
+                template_folder='/home/ubuntu/server',
+                static_url_path='')
 
     import db
     db.init_app(app)
@@ -20,7 +23,7 @@ def create_app():
         import db
         db = db.get_db()
         nodes = db.execute('SELECT * FROM node').fetchall()
-        return render_template('./index.html', nodes=nodes)
+        return render_template('./index.html', nodes=nodes, title='Sloth Tools')
 
     def sendCode(code, iterations):
         progPath = '/home/ubuntu/433Utils/RPi_utils/codesend'
@@ -68,6 +71,10 @@ def create_app():
         cv2.imwrite('webcam.jpg', frame)
         capture.release()
         return send_file('webcam.jpg', cache_timeout=-1)
+
+    @app.route('/static/<path:path>')
+    def sendStaticResources(path):
+        return send_from_directory('static', path)
 
     return app
 
