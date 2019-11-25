@@ -17,17 +17,18 @@
   <meta name="msapplication-TileColor" content="#2b5797">
   <meta name="theme-color" content="#ffffff">
 
-  <link rel="stylesheet" href="static/switch.css?v=1.0">
-  <link rel="stylesheet" href="static/custom.css?v=0.1">
+  <link rel="stylesheet" href="static/switch.css?v=1.1">
+  <link rel="stylesheet" href="static/custom.css?v=0.2">
   <link href="https://fonts.googleapis.com/css?family=Amatic+SC&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
 </head>
 
 <body>
   <div class="container-fluid">
     <div class="head">
       <div class="logo">
-        <img src="/static/apple-touch-icon.png"/>
-        <span>just be a<br/>happy sofa sloth :)</span>
+        <img id="sloth" src="/static/apple-touch-icon.png"/>
+        <span class="animated lightSpeedIn">just be a<br/>happy sofa sloth :)</span>
       </div>
     </div>
     <br/>
@@ -53,6 +54,20 @@
   </div>
 
   <script>
+      function animateCSS(element, animationName, callback) {
+        const node = document.querySelector(element)
+        node.classList.add('animated', animationName)
+
+        function handleAnimationEnd() {
+            node.classList.remove('animated', animationName)
+            node.removeEventListener('animationend', handleAnimationEnd)
+
+            if (typeof callback === 'function') callback()
+        }
+
+        node.addEventListener('animationend', handleAnimationEnd)
+    }
+
     function setButtonsDisabledState(disabled) {
       var els = document.getElementsByTagName('button');
       for (var i = 0; i < els.length; i++) {
@@ -70,6 +85,7 @@
     }
 
     function switchState(nodeId, state) {
+      animateCSS('#sloth', 'swing');
       setButtonsDisabledState(true);
       var url = 'http://192.168.178.61:5000/' + state + '?id=' + nodeId;
       var xhttp = new XMLHttpRequest();
@@ -83,6 +99,12 @@
       };
       xhttp.send();
     }
+
+    animateCSS('#sloth', 'bounceInDown');
+
+     window.addEventListener('focus', function() {
+       // 
+     });
   </script>
 </body>
 </html>
