@@ -34,16 +34,6 @@
     <br/>
 
     <div class="container-nodes">
-      {% for node in nodes %}
-        <label class="switch" style="float: left">
-          <input type="checkbox" {{ 'checked' if node.state else '' }}
-                 id="switch-{{ node.id }}"
-                 onclick="checkSwitch(this)" node-id="{{ node.id }}" />
-          <span class="slider round"></span>
-        </label>
-        <label for="switch-{{ node.id }}" class="label-for-switch">{{ node.title }}</label>
-        <br style="clear: both" /><br />
-      {% endfor %}
     </div>
 
     <!--<div class="card">
@@ -100,11 +90,25 @@
       xhttp.send();
     }
 
-    animateCSS('#sloth', 'bounceInDown');
+    function refreshNodes() {
+      animateCSS('#sloth', 'bounce');
+      var container = document.querySelector('div.container-nodes');
+      var url = 'http://192.168.178.61:5000/nodes';
+      var xhttp = new XMLHttpRequest();
+      xhttp.open('GET', url, true);
+      xhttp.addEventListener('load', function(event) {
+        container.innerHTML = '';
+        container.insertAdjacentHTML('beforeend', xhttp.responseText);
+      });
+      xhttp.send();
+    }
 
-     window.addEventListener('focus', function() {
-       // 
-     });
+    window.addEventListener('focus', function() {
+      refreshNodes();
+    });
+
+    animateCSS('#sloth', 'bounceInDown');
+    refreshNodes();
   </script>
 </body>
 </html>

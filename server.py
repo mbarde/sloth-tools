@@ -20,10 +20,14 @@ def create_app():
 
     @app.route('/')
     def index():
+        return render_template('./index.html', title='Sloth Tools')
+
+    @app.route('/nodes')
+    def nodes():
         import db
         db = db.get_db()
         nodes = db.execute('SELECT * FROM node').fetchall()
-        return render_template('./index.html', nodes=nodes, title='Sloth Tools')
+        return render_template('./nodes.html', nodes=nodes)
 
     def sendCode(code, iterations):
         progPath = '/home/ubuntu/433Utils/RPi_utils/codesend'
