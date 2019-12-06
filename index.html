@@ -17,10 +17,9 @@
   <meta name="msapplication-TileColor" content="#2b5797">
   <meta name="theme-color" content="#ffffff">
 
-  <link rel="stylesheet" href="static/switch.css?v=1.1">
-  <link rel="stylesheet" href="static/custom.css?v=0.2">
-  <link href="https://fonts.googleapis.com/css?family=Amatic+SC&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+  <link rel="stylesheet" href="/static/css/animate.3.7.2.min.css">
+  <link rel="stylesheet" href="/static/css/switch.css?v=1.2">
+  <link rel="stylesheet" href="/static/css/custom.css?v=0.3">
 </head>
 
 <body>
@@ -31,10 +30,8 @@
         <span class="animated lightSpeedIn">just be a<br/>happy sofa sloth :)</span>
       </div>
     </div>
-    <br/>
 
-    <div class="container-nodes">
-    </div>
+    <div class="container-nodes"></div>
 
     <!--<div class="card">
       <div class="card-body">
@@ -42,73 +39,6 @@
       </div>
     </div>-->
   </div>
-
-  <script>
-      function animateCSS(element, animationName, callback) {
-        const node = document.querySelector(element)
-        node.classList.add('animated', animationName)
-
-        function handleAnimationEnd() {
-            node.classList.remove('animated', animationName)
-            node.removeEventListener('animationend', handleAnimationEnd)
-
-            if (typeof callback === 'function') callback()
-        }
-
-        node.addEventListener('animationend', handleAnimationEnd)
-    }
-
-    function setButtonsDisabledState(disabled) {
-      var els = document.getElementsByTagName('button');
-      for (var i = 0; i < els.length; i++) {
-        els[i].disabled = disabled;
-      }
-    }
-
-    function checkSwitch(el) {
-      var nodeId = el.getAttribute('node-id');
-      if (el.checked) {
-        switchState(nodeId, 'on');
-      } else {
-        switchState(nodeId, 'off');
-      }
-    }
-
-    function switchState(nodeId, state) {
-      animateCSS('#sloth', 'swing');
-      setButtonsDisabledState(true);
-      var url = 'http://192.168.178.61:5000/' + state + '?id=' + nodeId;
-      var xhttp = new XMLHttpRequest();
-      xhttp.open('GET', url, true);
-      xhttp.onreadystatechange = function() {
-        setButtonsDisabledState(false);
-        if (this.readyState !== 4 && this.status !== 200) {
-          console.error('Request failed:');
-          console.error(this);
-        }
-      };
-      xhttp.send();
-    }
-
-    function refreshNodes() {
-      animateCSS('#sloth', 'bounce');
-      var container = document.querySelector('div.container-nodes');
-      var url = 'http://192.168.178.61:5000/nodes';
-      var xhttp = new XMLHttpRequest();
-      xhttp.open('GET', url, true);
-      xhttp.addEventListener('load', function(event) {
-        container.innerHTML = '';
-        container.insertAdjacentHTML('beforeend', xhttp.responseText);
-      });
-      xhttp.send();
-    }
-
-    window.addEventListener('focus', function() {
-      refreshNodes();
-    });
-
-    animateCSS('#sloth', 'bounceInDown');
-    refreshNodes();
-  </script>
+  <script src="/static/js/main.js?v=1.0"></script>
 </body>
 </html>

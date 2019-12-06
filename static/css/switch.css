@@ -27,6 +27,10 @@
   transition: .4s;
 }
 
+.disabled .slider {
+  cursor: default;
+}
+
 .slider:before {
   position: absolute;
   content: "";
@@ -39,15 +43,15 @@
   transition: .4s;
 }
 
-input:checked + .slider {
+.switch input:checked + .slider {
   background-color: #B4D7A2;
 }
 
-input:focus + .slider {
+.switch input:focus + .slider {
   box-shadow: 0 0 1px #B4D7A2;
 }
 
-input:checked + .slider:before {
+.switch input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
@@ -67,4 +71,8 @@ input:checked + .slider:before {
   margin-left: 15px;
   cursor: pointer;
   font-family: 'Amatic SC', cursive;
+}
+
+.disabled .label-for-switch {
+  cursor: default;
 }

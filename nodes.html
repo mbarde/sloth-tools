@@ -1,10 +1,13 @@
-{% for node in nodes %}
-  <label class="switch" style="float: left">
-    <input type="checkbox" {{ 'checked' if node.state else '' }}
-           id="switch-{{ node.id }}"
-           onclick="checkSwitch(this)" node-id="{{ node.id }}" />
-    <span class="slider round"></span>
-  </label>
-  <label for="switch-{{ node.id }}" class="label-for-switch">{{ node.title }}</label>
-  <br style="clear: both" /><br />
-{% endfor %}
+<ul class="nodes">
+  {% for node in nodes %}
+  <li class="node">
+    <label class="switch" style="float: left">
+      <input type="checkbox" {{ 'checked' if node.state else '' }}
+             id="switch-{{ node.id }}"
+             onclick="checkSwitch(this, event)" node-id="{{ node.id }}" />
+      <span class="slider round"></span>
+    </label>
+    <label for="switch-{{ node.id }}" class="label-for-switch">{{ node.title }}</label>
+  </li>
+  {% endfor %}
+</ul>
