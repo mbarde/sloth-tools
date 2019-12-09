@@ -8,6 +8,7 @@
       <span class="slider round"></span>
     </label>
     <label for="switch-{{ node.id }}" class="label-for-switch">{{ node.title }}</label>
+    <span class="tool" onclick="showPopupNodeForm(event, {{ node.id }})">⚙️</span>
   </li>
   {% endfor %}
 </ul>

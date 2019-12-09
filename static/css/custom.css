@@ -30,6 +30,12 @@ ul.nodes li.node.disabled {
   cursor: default;
 }
 
+ul.nodes li .tool {
+  float: right;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
 div.head {
   background-color: #B4D7A2;
   padding: 5px;
@@ -47,6 +53,7 @@ div.logo img {
 }
 
 div.logo span {
+  color: #313131;
   top: 13px;
   font-size: 2rem;
   position: absolute;
@@ -63,4 +70,63 @@ div.card {
 
 div.card img {
   max-width: 100%;
+}
+
+div.popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  display: none;
+}
+
+div.popup .container {
+  background: white;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20%;
+}
+
+div.popup form input {
+  display: inline;
+  width: 90%;
+  border: 1px solid #B4D7A2;
+  padding: 10px;
+  margin: 10px;
+  margin-left: 10px;
+}
+
+div.popup form input:active,
+div.popup form input:focus,
+div.popup form input:hover {
+  border-color: #313131
+}
+
+div.popup form button {
+  display: block;
+  background: #B4D7A2;
+  color: #313131;
+  width: 50%;
+  margin-top: 20px;
+  margin-bottom: -20px;
+  font-size: 20px;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+div.popup form button.btn-update {
+  float: left;
+}
+
+div.popup form button.btn-close {
+  float: right;
+  background: #D7A2B4;
+}
+
+div.popup form button:hover {
+  opacity: 0.8;
 }

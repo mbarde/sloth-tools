@@ -36,18 +36,18 @@ def create_app():
         for i in range(1, iterations):
             proc = subprocess.Popen(args, stdout=FNULL)
             proc.wait()
-        return f'sent ({escape(iterations)}x): {escape(code)}!'
+        return 'sent ({0}x): {1}'.format(escape(iterations), escape(code))
 
     def getNodeById(nodeId):
         import db
         db = db.get_db()
-        node = db.execute('SELECT * FROM node WHERE id = ?', nodeId).fetchone()
+        node = db.execute('SELECT * FROM node WHERE id = ?', str(nodeId)).fetchone()
         return node
 
     def setNodeState(nodeId, state):
         import db
         db = db.get_db()
-        res = db.execute('UPDATE node SET state = ? WHERE id = ?;', (state, nodeId))
+        db.execute('UPDATE node SET state = ? WHERE id = ?;', (state, nodeId))
         db.commit()
 
     @app.route('/on')
@@ -75,6 +75,45 @@ def create_app():
         cv2.imwrite('webcam.jpg', frame)
         capture.release()
         return send_file('webcam.jpg', cache_timeout=-1)
+
+    # node API
+    @app.route('/node/create', methods=['GET', 'POST'])
+    def nodeCreate():
+        jsonData = request.get_json()
+        if jsonData is not None:
+            # do create
+            return 'OK'
+        node = {
+            'title': '',
+            'codeOn': '',
+            'codeOff': '',
+            'iterations': '3'
+        }
+        return render_template('./node.html', node=node, action='/node/create')
+
+    @app.route('/node/read/<int:id>')
+    def nodeRead(id):
+        node = getNodeById(id)
+        return dict(node)
+
+    @app.route('/node/update/<int:id>', methods=['GET', 'POST'])
+    def nodeUpdate(id):
+        jsonData = request.get_json()
+        if jsonData is not None:
+            node = jsonData
+            import db
+            db = db.get_db()
+            sql = 'UPDATE node SET title = ?, codeOn = ?, codeOff = ?, iterations = ? WHERE id = ?;'
+            db.execute(
+                sql,
+                (node['title'], node['codeOn'], node['codeOff'],
+                 node['iterations'], node['id'])
+            )
+            db.commit()
+            return 'OK'
+        node = getNodeById(id)
+        actionUrl = '/node/update/{0}'.format(id)
+        return render_template('./node.html', node=node, action=actionUrl)
 
     @app.route('/static/<path:path>')
     def sendStaticResources(path):

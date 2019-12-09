@@ -67,6 +67,43 @@ function refreshNodes() {
   xhttp.send()
 }
 
+function showPopupNodeForm(event, nodeId=false) {
+  event.preventDefault()
+  var container = document.querySelector('div.popup .container')
+  var url = 'http://192.168.178.61:5000/node/update/' + nodeId
+  var xhttp = new XMLHttpRequest()
+  xhttp.open('GET', url)
+  xhttp.addEventListener('load', function(event) {
+    container.innerHTML = ''
+    container.insertAdjacentHTML('beforeend', xhttp.responseText)
+    document.getElementById('popup-node-form').style.display = 'block'
+  })
+  xhttp.send()
+  return false
+}
+
+function hidePopupNodeForm() {
+  document.getElementById('popup-node-form').style.display = 'none'  
+}
+
+function updateNode() {
+  var url = document.getElementById('form-node').action
+  var node = {}
+  node.id = document.getElementById('id').value
+  node.title = document.getElementById('title').value
+  node.codeOn = document.getElementById('codeOn').value
+  node.codeOff = document.getElementById('codeOff').value
+  node.iterations = document.getElementById('iterations').value
+  var xhttp = new XMLHttpRequest()
+  xhttp.open('POST', url)
+  xhttp.setRequestHeader('Content-Type', 'application/json')
+  xhttp.send(JSON.stringify(node))
+  xhttp.addEventListener('load', function(event) {
+    document.getElementById('popup-node-form').style.display = 'none'
+    refreshNodes()
+  })
+}
+
 var blurred = false
 
 window.addEventListener('focus', function() {

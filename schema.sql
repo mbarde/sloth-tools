@@ -30,7 +30,7 @@ VALUES ('B', '4198737', '4198740', 3);
 */
 
 INSERT INTO node (title, codeOn, codeOff, iterations)
-VALUES ('Kaffee ☕', '4199505', '4199508', 3);
+VALUES ('Schlafzimmer 🛏️', '4199505', '4199508', 3);
 
 /*
 INSERT INTO node (title, codeOn, codeOff, iterations)

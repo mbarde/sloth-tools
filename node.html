@@ -1,0 +1,10 @@
+<form id="form-node" action="{{ action }}" method="POST">
+  <input id="id" name="id" type="hidden" value="{{ node.id }}"/>
+  <input id="title" name="title" type="text" value="{{ node.title }}"/>
+  <input id="codeOn" name="codeOn" type="text" value="{{ node.codeOn }}"/>
+  <input id="codeOff" name="codeOff" type="text" value="{{ node.codeOff }}"/>
+  <input id="iterations" name="iterations" type="text" value="{{ node.iterations }}"/>
+  <button class="btn-update" type="button" onclick="updateNode()">Update</button>
+  <button class="btn-close" type="button" onclick="hidePopupNodeForm()">Schließen</button>
+  <br style="clear: both"/>
+</form>
