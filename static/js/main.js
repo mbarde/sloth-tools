@@ -1,15 +1,16 @@
-function animateCSS(element, animationName, callback) {
-  const node = document.querySelector(element)
-  node.classList.add('animated', animationName)
-
+function animateCSSElement(element, animationName, callback) {
+  element.classList.add('animated', animationName)
   function handleAnimationEnd() {
-      node.classList.remove('animated', animationName)
-      node.removeEventListener('animationend', handleAnimationEnd)
-
+      element.classList.remove('animated', animationName)
+      element.removeEventListener('animationend', handleAnimationEnd)
       if (typeof callback === 'function') callback()
   }
+  element.addEventListener('animationend', handleAnimationEnd)
+}
 
-  node.addEventListener('animationend', handleAnimationEnd)
+function animateCSS(elementSelector, animationName, callback) {
+  var element = document.querySelector(elementSelector)
+  animateCSSElement(element, animationName, callback)
 }
 
 function setNodesDisabledState(disabled) {
@@ -25,10 +26,12 @@ function setNodesDisabledState(disabled) {
 
 function checkSwitch(el, event) {
   var nodeLiEl = el.parentElement.parentElement
-  if (nodeLiEl.classList.contains('disabled')) {
+  if (nodeLiEl.classList.contains('disabled') ||
+      nodeLiEl.classList.contains('slided')) {
     event.preventDefault()
     return
   }
+  unslideAll()
   var nodeId = el.getAttribute('node-id');
   if (el.checked) {
     switchState(nodeId, 'on')
@@ -78,6 +81,7 @@ function showPopupNodeForm(event=false, nodeId=false) {
     container.innerHTML = ''
     container.insertAdjacentHTML('beforeend', xhttp.responseText)
     document.getElementById('popup-node-form').style.display = 'block'
+    document.getElementById('title').focus()
   })
   xhttp.send()
   return false
@@ -88,7 +92,8 @@ function hidePopupNodeForm() {
 }
 
 function updateNode() {
-  var url = document.getElementById('form-node').action
+  var form = document.getElementById('form-node')
+  var url = form.action
   var node = {}
   node.id = document.getElementById('id').value
   node.title = document.getElementById('title').value
@@ -96,25 +101,72 @@ function updateNode() {
   node.codeOff = document.getElementById('codeOff').value
   node.iterations = document.getElementById('iterations').value
   var xhttp = new XMLHttpRequest()
-  xhttp.open('POST', url)
+  xhttp.open(form.method, url)
   xhttp.setRequestHeader('Content-Type', 'application/json')
-  xhttp.send(JSON.stringify(node))
   xhttp.addEventListener('load', function(event) {
-    document.getElementById('popup-node-form').style.display = 'none'
+    hidePopupNodeForm()
     refreshNodes()
   })
+  xhttp.send(JSON.stringify(node))
+}
+
+function deleteNode(event, nodeId) {
+  console.log('pe')
+  if (event) event.preventDefault()
+  var url = '/node/delete/' + nodeId
+  var xhttp = new XMLHttpRequest()
+  xhttp.open('DELETE', url)
+  xhttp.addEventListener('load', function(event) {
+    refreshNodes()
+  })
+  xhttp.send()
+  return false
+}
+
+function onToolClicked(element, event) {
+  event.preventDefault()
+  unslideAll()
+  element.style.display = 'none'
+  var liElement = element.parentElement
+  slideLi(liElement)
+  return false
+}
+
+function slideLi(liElement) {
+  liElement.classList.add('slided')
+  var hiddenTools = liElement.getElementsByClassName('hidden-tools')[0]
+  hiddenTools.style.display = 'inline-block'
+  animateCSSElement(hiddenTools, 'slideInRight')
+}
+
+function unslideLi(liElement) {
+  liElement.classList.remove('slided')
+  var tool = liElement.getElementsByClassName('tool')[0]
+  tool.style.display = 'block'
+  var hiddenTools = liElement.getElementsByClassName('hidden-tools')[0]
+  animateCSSElement(hiddenTools, 'slideOutRight', function() {
+    hiddenTools.style.display = 'none'
+  })
+}
+
+function unslideAll() {
+  var slidedLis = document.getElementsByClassName('slided')
+  for (var i = 0; i < slidedLis.length; i++) {
+    unslideLi(slidedLis[i])
+  }
 }
 
 var blurred = false
 
-window.addEventListener('focus', function() {
-  if (blurred) refreshNodes()
-  blurred = false
-})
+animateCSS('#sloth', 'bounceInDown');
+refreshNodes()
+
 
 window.addEventListener('blur', function() {
   blurred = true
 })
 
-animateCSS('#sloth', 'bounceInDown');
-refreshNodes()
+window.addEventListener('focus', function() {
+  if (blurred) refreshNodes()
+  blurred = false
+})

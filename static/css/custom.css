@@ -16,7 +16,6 @@ button {
   display: block;
   background: #B4D7A2;
   color: #313131;
-  width: 50%;
   font-size: 20px;
   border: none;
   padding: 10px;
@@ -25,6 +24,14 @@ button {
 
 button:hover {
   opacity: 0.8;
+}
+
+button.boring {
+  background: #ccc;
+}
+
+button.danger {
+  background: #D7A2B4;
 }
 
 div.container-nodes {
@@ -38,6 +45,7 @@ ul.nodes {
 
 ul.nodes li.node {
   margin-bottom: 15px;
+  animation: slideback 1.0s forwards;
 }
 
 ul.nodes li.node.disabled {
@@ -51,6 +59,43 @@ ul.nodes li .tool {
   margin-top: 15px;
 }
 
+ul.nodes li .tool:hover {
+  opacity: 0.8;
+}
+
+ul.nodes li .hidden-tools {
+  display: none;
+  float: right;
+  margin-right: -20px;
+}
+
+ul.nodes li .hidden-tools button {
+  font-size: 30px;
+  float: right;
+}
+
+ul.nodes li.slided {
+  animation: slideleft 1.0s forwards;
+}
+
+@keyframes slideleft {
+  from {
+    margin-left: 0;
+  }
+  to {
+    margin-left: -100px;
+  }
+}
+
+@keyframes slideback {
+  from {
+    margin-left: -100px;
+  }
+  to {
+    margin-left: 0;
+  }
+}
+
 div.head {
   background-color: #B4D7A2;
   padding: 5px;
@@ -60,6 +105,7 @@ div.logo {
   width: 275px;
   margin-left: auto;
   margin-right: auto;
+  cursor: pointer;
 }
 
 div.logo img {
@@ -132,12 +178,13 @@ form input:hover {
 }
 
 div.popup form button.btn-update {
+  width: 50%;
   float: left;
 }
 
 div.popup form button.btn-close {
+  width: 50%;
   float: right;
-  background: #D7A2B4;
 }
 
 #btn-add-node {

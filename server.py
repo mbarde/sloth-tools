@@ -105,9 +105,10 @@ def create_app():
         }
         return render_template(
             './node.html', node=node,
-            title='Add node', action='/node/create', submitLabel='Create')
+            action='/node/create', method='POST',
+            title='Add node', submitLabel='Create')
 
-    @app.route('/node/read/<int:id>')
+    @app.route('/node/read/<int:id>', methods=['GET'])
     def nodeRead(id):
         node = getNodeById(id)
         return dict(node)
@@ -131,7 +132,17 @@ def create_app():
         actionUrl = '/node/update/{0}'.format(id)
         return render_template(
             './node.html', node=node,
-            title='Update node', action=actionUrl, submitLabel='Update')
+            action=actionUrl, method='POST',
+            title='Update node', submitLabel='Update')
+
+    @app.route('/node/delete/<int:id>', methods=['DELETE'])
+    def nodeDelete(id):
+        import db
+        db = db.get_db()
+        sql = 'DELETE FROM node WHERE id = ?;'
+        db.execute(sql, (id,))
+        db.commit()
+        return 'OK'
 
     @app.route('/static/<path:path>')
     def sendStaticResources(path):

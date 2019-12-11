@@ -8,7 +8,11 @@
       <span class="slider round"></span>
     </label>
     <label for="switch-{{ node.id }}" class="label-for-switch">{{ node.title }}</label>
-    <span class="tool" onclick="showPopupNodeForm(event, {{ node.id }})">⚙️</span>
+    <span class="tool" onclick="onToolClicked(this, event)">⚙️</span>
+    <div class="hidden-tools">
+      <button title="Delete node" onclick="deleteNode(event, {{ node.id }})" class="danger">🗑️</button>
+      <button title="Edit node" onclick="showPopupNodeForm(event, {{ node.id }})" class="boring">🖊️</button>
+    <div>
   </li>
   {% endfor %}
 </ul>
