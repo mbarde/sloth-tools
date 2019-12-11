@@ -1,10 +1,15 @@
 <form id="form-node" action="{{ action }}" method="POST">
+  <h1>{{title}}</h1>
   <input id="id" name="id" type="hidden" value="{{ node.id }}"/>
+  <label>Title</label>
   <input id="title" name="title" type="text" value="{{ node.title }}"/>
+  <label>Code on</label>
   <input id="codeOn" name="codeOn" type="text" value="{{ node.codeOn }}"/>
+  <label>Code off</label>
   <input id="codeOff" name="codeOff" type="text" value="{{ node.codeOff }}"/>
+  <label>Iterations</label>
   <input id="iterations" name="iterations" type="text" value="{{ node.iterations }}"/>
-  <button class="btn-update" type="button" onclick="updateNode()">Update</button>
-  <button class="btn-close" type="button" onclick="hidePopupNodeForm()">Schließen</button>
+  <button class="btn-update" type="button" onclick="updateNode()">{{ submitLabel }}</button>
+  <button class="btn-close" type="button" onclick="hidePopupNodeForm()">Close</button>
   <br style="clear: both"/>
 </form>

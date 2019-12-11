@@ -5,14 +5,17 @@ from flask import send_file
 from flask import send_from_directory
 from flask import Flask
 
-import cv2
 import os
 import subprocess
 
 
 def create_app():
+    # absolute path to the codesend binary
+    # from https://github.com/ninjablocks/433Utils
+    codesendBinPath = '/home/ubuntu/433Utils/RPi_utils/codesend'
+
     app = Flask(__name__,
-                template_folder='/home/ubuntu/server',
+                template_folder='.',
                 static_url_path='')
 
     import db
@@ -30,8 +33,9 @@ def create_app():
         return render_template('./nodes.html', nodes=nodes)
 
     def sendCode(code, iterations):
-        progPath = '/home/ubuntu/433Utils/RPi_utils/codesend'
-        args = ['sudo', progPath, code]
+        if not os.path.isfile(codesendBinPath):
+            return 'codesend binary not found'
+        args = ['sudo', codesendBinPath, code]
         FNULL = open(os.devnull, 'w')
         for i in range(1, iterations):
             proc = subprocess.Popen(args, stdout=FNULL)
@@ -68,6 +72,7 @@ def create_app():
             setNodeState(nodeId, 0)
         return res
 
+    '''
     @app.route('/webcam')
     def webcam():
         capture = cv2.VideoCapture(0)
@@ -75,13 +80,22 @@ def create_app():
         cv2.imwrite('webcam.jpg', frame)
         capture.release()
         return send_file('webcam.jpg', cache_timeout=-1)
+    '''
 
     # node API
     @app.route('/node/create', methods=['GET', 'POST'])
     def nodeCreate():
         jsonData = request.get_json()
         if jsonData is not None:
-            # do create
+            node = jsonData
+            import db
+            db = db.get_db()
+            sql = 'INSERT INTO node (title, codeOn, codeOff, iterations) VALUES (?, ?, ?, ?);'
+            db.execute(
+                sql,
+                (node['title'], node['codeOn'], node['codeOff'], node['iterations'])
+            )
+            db.commit()
             return 'OK'
         node = {
             'title': '',
@@ -89,7 +103,9 @@ def create_app():
             'codeOff': '',
             'iterations': '3'
         }
-        return render_template('./node.html', node=node, action='/node/create')
+        return render_template(
+            './node.html', node=node,
+            title='Add node', action='/node/create', submitLabel='Create')
 
     @app.route('/node/read/<int:id>')
     def nodeRead(id):
@@ -113,7 +129,9 @@ def create_app():
             return 'OK'
         node = getNodeById(id)
         actionUrl = '/node/update/{0}'.format(id)
-        return render_template('./node.html', node=node, action=actionUrl)
+        return render_template(
+            './node.html', node=node,
+            title='Update node', action=actionUrl, submitLabel='Update')
 
     @app.route('/static/<path:path>')
     def sendStaticResources(path):

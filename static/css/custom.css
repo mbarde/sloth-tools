@@ -12,6 +12,21 @@ body {
   margin: 0;
 }
 
+button {
+  display: block;
+  background: #B4D7A2;
+  color: #313131;
+  width: 50%;
+  font-size: 20px;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
 div.container-nodes {
   padding: 20px;
 }
@@ -90,7 +105,18 @@ div.popup .container {
   margin-top: 20%;
 }
 
-div.popup form input {
+form h1 {
+  padding-top: 10px;
+  margin: 10px;
+}
+
+form label {
+  display: block;
+  margin-left: 10px;
+  margin-bottom: -10px;
+}
+
+form input {
   display: inline;
   width: 90%;
   border: 1px solid #B4D7A2;
@@ -99,23 +125,10 @@ div.popup form input {
   margin-left: 10px;
 }
 
-div.popup form input:active,
-div.popup form input:focus,
-div.popup form input:hover {
+form input:active,
+form input:focus,
+form input:hover {
   border-color: #313131
-}
-
-div.popup form button {
-  display: block;
-  background: #B4D7A2;
-  color: #313131;
-  width: 50%;
-  margin-top: 20px;
-  margin-bottom: -20px;
-  font-size: 20px;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
 }
 
 div.popup form button.btn-update {
@@ -127,6 +140,8 @@ div.popup form button.btn-close {
   background: #D7A2B4;
 }
 
-div.popup form button:hover {
-  opacity: 0.8;
+#btn-add-node {
+  width: 100%;
+  background: none;
+  margin-top: 20px;
 }

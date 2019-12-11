@@ -40,7 +40,7 @@ function checkSwitch(el, event) {
 function switchState(nodeId, state) {
   animateCSS('#sloth', 'swing')
   setNodesDisabledState(true)
-  var url = 'http://192.168.178.61:5000/' + state + '?id=' + nodeId
+  var url = '/' + state + '?id=' + nodeId
   var xhttp = new XMLHttpRequest()
   xhttp.open('GET', url, true)
   xhttp.onreadystatechange = function() {
@@ -57,7 +57,7 @@ function refreshNodes() {
   animateCSS('#sloth', 'bounce')
   setNodesDisabledState(true)
   var container = document.querySelector('div.container-nodes')
-  var url = 'http://192.168.178.61:5000/nodes'
+  var url = '/nodes'
   var xhttp = new XMLHttpRequest()
   xhttp.open('GET', url, true)
   xhttp.addEventListener('load', function(event) {
@@ -67,10 +67,11 @@ function refreshNodes() {
   xhttp.send()
 }
 
-function showPopupNodeForm(event, nodeId=false) {
-  event.preventDefault()
+function showPopupNodeForm(event=false, nodeId=false) {
+  if (event) event.preventDefault()
   var container = document.querySelector('div.popup .container')
-  var url = 'http://192.168.178.61:5000/node/update/' + nodeId
+  var url = '/node/create'
+  if (nodeId !== false) url = '/node/update/' + nodeId
   var xhttp = new XMLHttpRequest()
   xhttp.open('GET', url)
   xhttp.addEventListener('load', function(event) {
@@ -83,7 +84,7 @@ function showPopupNodeForm(event, nodeId=false) {
 }
 
 function hidePopupNodeForm() {
-  document.getElementById('popup-node-form').style.display = 'none'  
+  document.getElementById('popup-node-form').style.display = 'none'
 }
 
 function updateNode() {
