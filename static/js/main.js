@@ -14,7 +14,7 @@ function animateCSS(elementSelector, animationName, callback) {
 }
 
 function setNodesDisabledState(disabled) {
-  var els = document.getElementsByClassName('node');
+  var els = document.getElementsByClassName('node')
   for (var i = 0; i < els.length; i++) {
     if (disabled) {
       els[i].classList.add('disabled')
@@ -32,7 +32,7 @@ function checkSwitch(el, event) {
     return
   }
   unslideAll()
-  var nodeId = el.getAttribute('node-id');
+  var nodeId = el.getAttribute('node-id')
   if (el.checked) {
     switchState(nodeId, 'on')
   } else {
@@ -133,10 +133,10 @@ function onToolClicked(element, event) {
 }
 
 function slideLi(liElement) {
-  liElement.classList.add('slided')
   var hiddenTools = liElement.getElementsByClassName('hidden-tools')[0]
   hiddenTools.style.display = 'inline-block'
   animateCSSElement(hiddenTools, 'slideInRight')
+  liElement.classList.add('slided')
 }
 
 function unslideLi(liElement) {
@@ -144,8 +144,10 @@ function unslideLi(liElement) {
   var tool = liElement.getElementsByClassName('tool')[0]
   tool.style.display = 'block'
   var hiddenTools = liElement.getElementsByClassName('hidden-tools')[0]
+  hiddenTools.style.marginRight = '-45px'
   animateCSSElement(hiddenTools, 'slideOutRight', function() {
     hiddenTools.style.display = 'none'
+    hiddenTools.style.marginRight = '0'
   })
 }
 
@@ -158,7 +160,7 @@ function unslideAll() {
 
 var blurred = false
 
-animateCSS('#sloth', 'bounceInDown');
+animateCSS('#sloth', 'bounceInDown')
 refreshNodes()
 
 
