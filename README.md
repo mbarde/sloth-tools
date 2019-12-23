@@ -5,7 +5,7 @@ sudo apt install python3-flask
 sudo apt-get install python3-opencv
 ```
 
-Setup databse:
+Setup database:
 
 ```
 export FLASK_APP=server.py
