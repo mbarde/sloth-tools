@@ -1,7 +1,6 @@
 from flask import escape
 from flask import render_template
 from flask import request
-from flask import send_file
 from flask import send_from_directory
 from flask import Flask
 
@@ -71,16 +70,6 @@ def create_app():
         if len(res) > 0:
             setNodeState(nodeId, 0)
         return res
-
-    '''
-    @app.route('/webcam')
-    def webcam():
-        capture = cv2.VideoCapture(0)
-        _, frame = capture.read()
-        cv2.imwrite('webcam.jpg', frame)
-        capture.release()
-        return send_file('webcam.jpg', cache_timeout=-1)
-    '''
 
     # node API
     @app.route('/node/create', methods=['GET', 'POST'])
