@@ -110,8 +110,8 @@ function updateNode() {
   xhttp.send(JSON.stringify(node))
 }
 
-function deleteNode(event, nodeId) {
-  console.log('pe')
+function deleteNode(event, nodeId, nodeTitle) {
+  if (!confirm(`Do you really want to delete node "${nodeTitle}"?`)) return
   if (event) event.preventDefault()
   var url = '/node/delete/' + nodeId
   var xhttp = new XMLHttpRequest()
