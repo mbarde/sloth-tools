@@ -3,6 +3,7 @@ from flask import render_template
 from flask import request
 from flask import send_from_directory
 from flask import Flask
+from service import CRUDService
 
 import os
 import subprocess
@@ -26,9 +27,8 @@ def create_app():
 
     @app.route('/nodes')
     def nodes():
-        import db
-        db = db.get_db()
-        nodes = db.execute('SELECT * FROM node').fetchall()
+        nodeService = CRUDService('node')
+        nodes = nodeService.read()
         return render_template('./nodes.html', nodes=nodes)
 
     def sendCode(code, iterations):
@@ -41,12 +41,6 @@ def create_app():
             proc.wait()
         return 'sent ({0}x): {1}'.format(escape(iterations), escape(code))
 
-    def getNodeById(nodeId):
-        import db
-        db = db.get_db()
-        node = db.execute('SELECT * FROM node WHERE id = ?', str(nodeId)).fetchone()
-        return node
-
     def setNodeState(nodeId, state):
         import db
         db = db.get_db()
@@ -56,7 +50,8 @@ def create_app():
     @app.route('/on')
     def switchOn():
         nodeId = request.args.get('id')
-        node = getNodeById(nodeId)
+        nodeService = CRUDService('node')
+        node = nodeService.read(nodeId)
         res = sendCode(node['codeOn'], node['iterations'])
         if len(res) > 0:
             setNodeState(nodeId, 1)
@@ -65,7 +60,8 @@ def create_app():
     @app.route('/off')
     def switchOff():
         nodeId = request.args.get('id')
-        node = getNodeById(nodeId)
+        nodeService = CRUDService('node')
+        node = nodeService.read(nodeId)
         res = sendCode(node['codeOff'], node['iterations'])
         if len(res) > 0:
             setNodeState(nodeId, 0)
@@ -74,24 +70,20 @@ def create_app():
     # node API
     @app.route('/node/create', methods=['GET', 'POST'])
     def nodeCreate():
+        nodeService = CRUDService('node')
+
+        node = None
         jsonData = request.get_json()
+
         if jsonData is not None:
             node = jsonData
-            import db
-            db = db.get_db()
-            sql = 'INSERT INTO node (title, codeOn, codeOff, iterations) VALUES (?, ?, ?, ?);'
-            db.execute(
-                sql,
-                (node['title'], node['codeOn'], node['codeOff'], node['iterations'])
-            )
-            db.commit()
-            return 'OK'
-        node = {
-            'title': '',
-            'codeOn': '',
-            'codeOff': '',
-            'iterations': '3'
-        }
+            if nodeService.create(node):
+                return 'OK'
+
+        if node is None:
+            node = nodeService.getEmpty()
+            node['iterations'] = '3'
+
         return render_template(
             './node.html', node=node,
             action='/node/create', method='POST',
@@ -99,25 +91,24 @@ def create_app():
 
     @app.route('/node/read/<int:id>', methods=['GET'])
     def nodeRead(id):
-        node = getNodeById(id)
+        nodeService = CRUDService('node')
+        node = nodeService.read(id)
         return dict(node)
 
     @app.route('/node/update/<int:id>', methods=['GET', 'POST'])
     def nodeUpdate(id):
+        node = None
+        nodeService = CRUDService('node')
+
         jsonData = request.get_json()
         if jsonData is not None:
             node = jsonData
-            import db
-            db = db.get_db()
-            sql = 'UPDATE node SET title = ?, codeOn = ?, codeOff = ?, iterations = ? WHERE id = ?;'
-            db.execute(
-                sql,
-                (node['title'], node['codeOn'], node['codeOff'],
-                 node['iterations'], node['id'])
-            )
-            db.commit()
-            return 'OK'
-        node = getNodeById(id)
+            if nodeService.update(node):
+                return 'OK'
+
+        if node is None:
+            node = nodeService.read(id)
+
         actionUrl = '/node/update/{0}'.format(id)
         return render_template(
             './node.html', node=node,
@@ -126,11 +117,8 @@ def create_app():
 
     @app.route('/node/delete/<int:id>', methods=['DELETE'])
     def nodeDelete(id):
-        import db
-        db = db.get_db()
-        sql = 'DELETE FROM node WHERE id = ?;'
-        db.execute(sql, (id,))
-        db.commit()
+        nodeService = CRUDService('node')
+        nodeService.delete(id)
         return 'OK'
 
     @app.route('/static/<path:path>')
