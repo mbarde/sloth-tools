@@ -56,6 +56,23 @@ function switchState(nodeId, state) {
   xhttp.send()
 }
 
+function switchStateForAll(state) {
+  animateCSS('#sloth', 'swing')
+  setNodesDisabledState(true)
+  var url = '/' + state
+  var xhttp = new XMLHttpRequest()
+  xhttp.open('GET', url, true)
+  xhttp.onreadystatechange = function() {
+    setNodesDisabledState(false)
+    refreshNodes()
+    if (this.readyState !== 4 && this.status !== 200) {
+      console.error('Request failed:')
+      console.error(this)
+    }
+  }
+  xhttp.send()
+}
+
 function refreshNodes() {
   animateCSS('#sloth', 'bounce')
   setNodesDisabledState(true)

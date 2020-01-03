@@ -51,20 +51,42 @@ def create_app():
     def switchOn():
         nodeId = request.args.get('id')
         nodeService = CRUDService('node')
-        node = nodeService.read(nodeId)
-        res = sendCode(node['codeOn'], node['iterations'])
-        if len(res) > 0:
-            setNodeState(nodeId, 1)
+
+        if nodeId is None:
+            res = ''
+            nodes = nodeService.read()
+            for node in nodes:
+                nodeRes = sendCode(node['codeOn'], node['iterations'])
+                if len(nodeRes) > 0:
+                    setNodeState(node['id'], 1)
+                res += nodeRes + '<br/>'
+        else:
+            node = nodeService.read(nodeId)
+            res = sendCode(node['codeOn'], node['iterations'])
+            if len(res) > 0:
+                setNodeState(node['id'], 1)
+
         return res
 
     @app.route('/off')
     def switchOff():
         nodeId = request.args.get('id')
         nodeService = CRUDService('node')
-        node = nodeService.read(nodeId)
-        res = sendCode(node['codeOff'], node['iterations'])
-        if len(res) > 0:
-            setNodeState(nodeId, 0)
+
+        if nodeId is None:
+            res = ''
+            nodes = nodeService.read()
+            for node in nodes:
+                nodeRes = sendCode(node['codeOff'], node['iterations'])
+                if len(nodeRes) > 0:
+                    setNodeState(node['id'], 0)
+                res += nodeRes + '<br/>'
+        else:
+            node = nodeService.read(nodeId)
+            res = sendCode(node['codeOff'], node['iterations'])
+            if len(res) > 0:
+                setNodeState(node['id'], 0)
+
         return res
 
     # node API
