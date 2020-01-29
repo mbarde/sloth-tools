@@ -16,3 +16,9 @@
   </li>
   {% endfor %}
 </ul>
+
+{% if nodes %}
+<button class="button half-width float-left" onclick="switchStateForAll('on')">🌞 All on</button>
+<button class="button danger half-width float-left" onclick="switchStateForAll('off')">🌑 All off</button>
+<br style="clear: both"/>
+{% endif %}
