@@ -4,6 +4,8 @@ from flask import request
 from flask import send_from_directory
 from flask import Flask
 from service import CRUDService
+from utils import bits2int
+from utils import int2bits
 
 import os
 import subprocess
@@ -24,12 +26,6 @@ def create_app():
     @app.route('/')
     def index():
         return render_template('./index.html', title='Sloth Tools')
-
-    @app.route('/nodes')
-    def nodes():
-        nodeService = CRUDService('node')
-        nodes = nodeService.read()
-        return render_template('./nodes.html', nodes=nodes)
 
     def sendCode(code, iterations):
         if not os.path.isfile(codesendBinPath):
@@ -90,6 +86,12 @@ def create_app():
         return res
 
     # node API
+    @app.route('/nodes')
+    def nodes():
+        nodeService = CRUDService('node')
+        nodes = nodeService.read()
+        return render_template('./nodes.html', nodes=nodes)
+
     @app.route('/node/create', methods=['GET', 'POST'])
     def nodeCreate():
         nodeService = CRUDService('node')
@@ -141,6 +143,68 @@ def create_app():
     def nodeDelete(id):
         nodeService = CRUDService('node')
         nodeService.delete(id)
+        return 'OK'
+
+    # event API
+    @app.route('/event/create', methods=['GET', 'POST'])
+    def eventCreate():
+        eventService = CRUDService('event')
+
+        event = None
+        jsonData = request.get_json()
+
+        if jsonData is not None:
+            event = jsonData
+            if eventService.create(event):
+                return 'OK'
+
+        if event is None:
+            event = eventService.getEmpty()
+            event['weekdays'] = bits2int([] * 7)  # all day
+            event['hour'] = 12
+            event['minute'] = 0
+
+        return render_template(
+            './event.html', event=event,
+            action='/event/create', method='POST',
+            title='Add event', submitLabel='Create')
+
+    @app.route('/event/read/<int:id>', methods=['GET'])
+    def eventRead(id):
+        eventService = CRUDService('event')
+        event = eventService.read(id)
+        return dict(event)
+
+    @app.route('/event/bynode/<int:id>', methods=['GET'])
+    def eventReadByNode(nodeIdRef):
+        eventService = CRUDService('event')
+        events = eventService.readBy(id, 'nodeIdRef', nodeIdRef)
+        return render_template('./events.html', events=events)
+
+    @app.route('/event/update/<int:id>', methods=['GET', 'POST'])
+    def eventUpdate(id):
+        event = None
+        eventService = CRUDService('event')
+
+        jsonData = request.get_json()
+        if jsonData is not None:
+            event = jsonData
+            if eventService.update(event):
+                return 'OK'
+
+        if event is None:
+            event = eventService.read(id)
+
+        actionUrl = '/event/update/{0}'.format(id)
+        return render_template(
+            './event.html', event=event,
+            action=actionUrl, method='POST',
+            title='Update event', submitLabel='Update')
+
+    @app.route('/event/delete/<int:id>', methods=['DELETE'])
+    def eventDelete(id):
+        eventService = CRUDService('event')
+        eventService.delete(id)
         return 'OK'
 
     @app.route('/static/<path:path>')

@@ -1,0 +1,11 @@
+<form id="form-event" action="{{ action }}" method="{{ method }}">
+  <h1>{{title}}</h1>
+  <input id="id" name="id" type="hidden" value="{{ event.id }}"/>
+  <label>Hour</label>
+  <input id="title" name="title" type="text" value="{{ event.hour }}"/>
+  <label>Minute/label>
+  <input id="title" name="title" type="text" value="{{ event.minute }}"/>
+  <button class="btn-update" type="button" onclick="updateEvent()">{{ submitLabel }}</button>
+  <button class="btn-close danger" type="button" onclick="hidePopupEventForm()">Close</button>
+  <br style="clear: both"/>
+</form>

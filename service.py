@@ -57,17 +57,24 @@ class CRUDService:
         results = conn.execute(sql).fetchall()
         return results
 
-    def readById(self, id):
+    def readByPK(self, id):
         conn = db.get_db()
         sql = 'SELECT * FROM {0} WHERE {1} = ?;'.format(
             self.tableName, self.primaryKey)
-        node = conn.execute(sql, (str(id),)).fetchone()
-        return node
+        el = conn.execute(sql, (str(id),)).fetchone()
+        return el
+
+    def readBy(self, key, value):
+        conn = db.get_db()
+        sql = 'SELECT * FROM {0} WHERE {1} = ?;'.format(
+            self.tableName, key)
+        el = conn.execute(sql, (str(value),)).fetchone()
+        return el
 
     def read(self, id=False):
         if id is False:
             return self.readAll()
-        return self.readById(id)
+        return self.readByPK(id)
 
     def update(self, data):
         conn = db.get_db()
