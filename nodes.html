@@ -11,7 +11,8 @@
     <span class="tool" onclick="onToolClicked(this, event)">⚙️</span>
     <div class="hidden-tools">
       <button title="Delete node" onclick="deleteNode(event, {{ node.id }}, '{{ node.title }}')" class="danger">🗑️</button>
-      <button title="Edit node" onclick="showPopupNodeForm(event, {{ node.id }})" class="boring">🖊️</button>
+      <button title="Edit node" onclick="showPopupForm('node', event, {{ node.id }})" class="boring">🖊️</button>
+      <button title="Edit events" onclick="showEventList({{ node.id }})" class="boring">[]</button>
     <div>
   </li>
   {% endfor %}

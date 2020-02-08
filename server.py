@@ -175,10 +175,10 @@ def create_app():
         event = eventService.read(id)
         return dict(event)
 
-    @app.route('/event/bynode/<int:id>', methods=['GET'])
+    @app.route('/event/bynode/<int:nodeIdRef>', methods=['GET'])
     def eventReadByNode(nodeIdRef):
         eventService = CRUDService('event')
-        events = eventService.readBy(id, 'nodeIdRef', nodeIdRef)
+        events = eventService.readBy('nodeIdRef', nodeIdRef)
         return render_template('./events.html', events=events)
 
     @app.route('/event/update/<int:id>', methods=['GET', 'POST'])

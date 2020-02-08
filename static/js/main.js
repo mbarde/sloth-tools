@@ -87,44 +87,39 @@ function refreshNodes() {
   xhttp.send()
 }
 
-function showPopupNodeForm(event=false, nodeId=false) {
-  if (event) event.preventDefault()
+function showPopupForm(type='node', clickEvent=false, objId=false) {
+  if (clickEvent) clickEvent.preventDefault()
   var container = document.querySelector('div.popup .container')
-  var url = '/node/create'
-  if (nodeId !== false) url = '/node/update/' + nodeId
+  var url = `/${type}/create`
+  if (objId !== false) url = `/${type}/update/` + objId
   var xhttp = new XMLHttpRequest()
   xhttp.open('GET', url)
-  xhttp.addEventListener('load', function(event) {
+  xhttp.addEventListener('load', function() {
     container.innerHTML = ''
     container.insertAdjacentHTML('beforeend', xhttp.responseText)
-    document.getElementById('popup-node-form').style.display = 'block'
+    document.getElementById('popup-form').style.display = 'block'
     document.getElementById('title').focus()
   })
   xhttp.send()
   return false
 }
 
-function hidePopupNodeForm() {
-  document.getElementById('popup-node-form').style.display = 'none'
+function hidePopupForm() {
+  document.getElementById('popup-form').style.display = 'none'
 }
 
-function updateNode() {
-  var form = document.getElementById('form-node')
+function submitForm(callback) {
+  var form = document.getElementById('form-popup')
+  var data = form2JSON(form)
   var url = form.action
-  var node = {}
-  node.id = document.getElementById('id').value
-  node.title = document.getElementById('title').value
-  node.codeOn = document.getElementById('codeOn').value
-  node.codeOff = document.getElementById('codeOff').value
-  node.iterations = document.getElementById('iterations').value
   var xhttp = new XMLHttpRequest()
   xhttp.open(form.method, url)
   xhttp.setRequestHeader('Content-Type', 'application/json')
   xhttp.addEventListener('load', function(event) {
-    hidePopupNodeForm()
-    refreshNodes()
+    hidePopupForm()
+    callback()
   })
-  xhttp.send(JSON.stringify(node))
+  xhttp.send(JSON.stringify(data))
 }
 
 function deleteNode(event, nodeId, nodeTitle) {
@@ -135,6 +130,22 @@ function deleteNode(event, nodeId, nodeTitle) {
   xhttp.open('DELETE', url)
   xhttp.addEventListener('load', function(event) {
     refreshNodes()
+  })
+  xhttp.send()
+  return false
+}
+
+function showEventList(nodeId) {
+  if (event) event.preventDefault()
+  var container = document.querySelector('div.popup .container')
+  var url = '/event/bynode/' + nodeId
+  var xhttp = new XMLHttpRequest()
+  xhttp.open('GET', url)
+  xhttp.addEventListener('load', function(event) {
+    container.innerHTML = ''
+    container.insertAdjacentHTML('beforeend', xhttp.responseText)
+    document.getElementById('popup-form').style.display = 'block'
+    document.getElementById('title').focus()
   })
   xhttp.send()
   return false
@@ -173,6 +184,21 @@ function unslideAll() {
   for (var i = 0; i < slidedLis.length; i++) {
     unslideLi(slidedLis[i])
   }
+}
+
+function form2JSON(form) {
+  var obj = {}
+  var elements = form.querySelectorAll('input, select, textarea')
+  for( var i = 0; i < elements.length; ++i ) {
+    var element = elements[i]
+    var name = element.name
+    var value = element.value
+
+    if( name ) {
+      obj[ name ] = value
+    }
+  }
+  return obj
 }
 
 var blurred = false

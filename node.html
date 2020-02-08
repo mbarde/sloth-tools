@@ -1,4 +1,4 @@
-<form id="form-node" action="{{ action }}" method="{{ method }}">
+<form id="form-popup" action="{{ action }}" method="{{ method }}">
   <h1>{{title}}</h1>
   <input id="id" name="id" type="hidden" value="{{ node.id }}"/>
   <label>Title</label>
@@ -9,7 +9,7 @@
   <input id="codeOff" name="codeOff" type="text" value="{{ node.codeOff }}"/>
   <label>Iterations</label>
   <input id="iterations" name="iterations" type="text" value="{{ node.iterations }}"/>
-  <button class="btn-update" type="button" onclick="updateNode()">{{ submitLabel }}</button>
-  <button class="btn-close danger" type="button" onclick="hidePopupNodeForm()">Close</button>
+  <button class="btn-update" type="button" onclick="submitForm(refreshNodes)">{{ submitLabel }}</button>
+  <button class="btn-close danger" type="button" onclick="hidePopupForm()">Close</button>
   <br style="clear: both"/>
 </form>

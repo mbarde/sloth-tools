@@ -3,4 +3,8 @@
   <li class="event">
     {{event.hour}}:{{event.minute}}
   </li>
+  {% endfor %}
 </ul>
+
+<button id="btn-add-event" onclick="showPopupForm('event')">➕ Add event</button>
+<button class="btn-close danger" type="button" onclick="hidePopupForm()">Close</button>
