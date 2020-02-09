@@ -1,10 +1,17 @@
-<form id="form-event" action="{{ action }}" method="{{ method }}">
+<form id="form-popup" action="{{ action }}" method="{{ method }}">
   <h1>{{title}}</h1>
   <input id="id" name="id" type="hidden" value="{{ event.id }}"/>
+  <label>Weekdays</label>
+  <input id="weekdays" name="weekdays" type="text"/>
   <label>Hour</label>
-  <input id="title" name="title" type="text" value="{{ event.hour }}"/>
-  <label>Minute/label>
-  <input id="title" name="title" type="text" value="{{ event.minute }}"/>
+  <input id="hour" name="hour" type="number" min="0" max="23"/>
+  <label>Minute</label>
+  <input id="minute" name="minute" type="number" min="0" max="60"/>
+  <label>Action</label>
+  <select id="switchOn" name="switchOn">
+    <option value="True">On</option>
+    <<option value="False">Off</option>
+  </select>
   <button class="btn-update" type="button" onclick="submitForm()">{{ submitLabel }}</button>
   <button class="btn-close danger" type="button" onclick="hidePopupForm()">Close</button>
   <br style="clear: both"/>

@@ -87,10 +87,11 @@ function refreshNodes() {
   xhttp.send()
 }
 
-function showPopupForm(type='node', clickEvent=false, objId=false) {
+function showPopupForm(type='node', clickEvent=false, objId=false, urlSuffix='') {
   if (clickEvent) clickEvent.preventDefault()
   var container = document.querySelector('div.popup .container')
   var url = `/${type}/create`
+  if (urlSuffix.length > 0) url += urlSuffix
   if (objId !== false) url = `/${type}/update/` + objId
   var xhttp = new XMLHttpRequest()
   xhttp.open('GET', url)

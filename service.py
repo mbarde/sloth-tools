@@ -68,7 +68,7 @@ class CRUDService:
         conn = db.get_db()
         sql = 'SELECT * FROM {0} WHERE {1} = ?;'.format(
             self.tableName, key)
-        el = conn.execute(sql, (str(value),)).fetchone()
+        el = conn.execute(sql, (str(value),)).fetchall()
         return el
 
     def read(self, id=False):

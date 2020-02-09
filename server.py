@@ -146,8 +146,8 @@ def create_app():
         return 'OK'
 
     # event API
-    @app.route('/event/create', methods=['GET', 'POST'])
-    def eventCreate():
+    @app.route('/event/create/<int:nodeId>', methods=['GET', 'POST'])
+    def eventCreate(nodeId):
         eventService = CRUDService('event')
 
         event = None
@@ -155,6 +155,11 @@ def create_app():
 
         if jsonData is not None:
             event = jsonData
+            event['nodeIdRef'] = nodeId
+            if event['switchOn'] == 'True':
+                event['switchOn'] = True
+            else:
+                event['switchOn'] = False
             if eventService.create(event):
                 return 'OK'
 
@@ -165,8 +170,8 @@ def create_app():
             event['minute'] = 0
 
         return render_template(
-            './event.html', event=event,
-            action='/event/create', method='POST',
+            './event.html', event=event, nodeId=nodeId,
+            action='/event/create/' + str(nodeId), method='POST',
             title='Add event', submitLabel='Create')
 
     @app.route('/event/read/<int:id>', methods=['GET'])
@@ -175,11 +180,11 @@ def create_app():
         event = eventService.read(id)
         return dict(event)
 
-    @app.route('/event/bynode/<int:nodeIdRef>', methods=['GET'])
-    def eventReadByNode(nodeIdRef):
+    @app.route('/event/bynode/<int:nodeId>', methods=['GET'])
+    def eventReadByNode(nodeId):
         eventService = CRUDService('event')
-        events = eventService.readBy('nodeIdRef', nodeIdRef)
-        return render_template('./events.html', events=events)
+        events = eventService.readBy('nodeIdRef', nodeId)
+        return render_template('./events.html', events=events, nodeId=nodeId)
 
     @app.route('/event/update/<int:id>', methods=['GET', 'POST'])
     def eventUpdate(id):

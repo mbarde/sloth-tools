@@ -1,10 +1,15 @@
 <ul class="events">
-  {% for node in nodes %}
+  {% for event in events %}
   <li class="event">
-    {{event.hour}}:{{event.minute}}
+    {{event.hour}}:{{event.minute}} o'clock:
+    {% if event.switchOn %}
+      switch on
+    {% else %}
+      switch off
+    {% endif %}
   </li>
   {% endfor %}
 </ul>
 
-<button id="btn-add-event" onclick="showPopupForm('event')">➕ Add event</button>
+<button id="btn-add-event" onclick="showPopupForm('event', false, false, '/{{ nodeId }}')">➕ Add event</button>
 <button class="btn-close danger" type="button" onclick="hidePopupForm()">Close</button>
