@@ -1,3 +1,4 @@
+from events import EventTable
 from flask import escape
 from flask import render_template
 from flask import request
@@ -5,7 +6,6 @@ from flask import send_from_directory
 from flask import Flask
 from service import CRUDService
 from utils import bits2int
-from utils import int2bits
 
 import os
 import subprocess
@@ -43,45 +43,48 @@ def create_app():
         db.execute('UPDATE node SET state = ? WHERE id = ?;', (state, nodeId))
         db.commit()
 
+    def switchNode(nodeId, state):
+        nodeService = CRUDService('node')
+        stateStr = 'codeOn'
+        if state == 0:
+            stateStr = 'codeOff'
+
+        node = nodeService.read(nodeId)
+        res = sendCode(node[stateStr], node['iterations'])
+        if len(res) > 0:
+            setNodeState(node['id'], state)
+
+        return res
+
     @app.route('/on')
     def switchOn():
         nodeId = request.args.get('id')
-        nodeService = CRUDService('node')
 
         if nodeId is None:
             res = ''
+            nodeService = CRUDService('node')
             nodes = nodeService.read()
             for node in nodes:
-                nodeRes = sendCode(node['codeOn'], node['iterations'])
-                if len(nodeRes) > 0:
-                    setNodeState(node['id'], 1)
+                nodeRes = switchNode(node['id'], 1)
                 res += nodeRes + '<br/>'
         else:
-            node = nodeService.read(nodeId)
-            res = sendCode(node['codeOn'], node['iterations'])
-            if len(res) > 0:
-                setNodeState(node['id'], 1)
+            res = switchNode(nodeId, 1)
 
         return res
 
     @app.route('/off')
     def switchOff():
         nodeId = request.args.get('id')
-        nodeService = CRUDService('node')
 
         if nodeId is None:
             res = ''
+            nodeService = CRUDService('node')
             nodes = nodeService.read()
             for node in nodes:
-                nodeRes = sendCode(node['codeOff'], node['iterations'])
-                if len(nodeRes) > 0:
-                    setNodeState(node['id'], 0)
+                nodeRes = switchNode(node['id'], 0)
                 res += nodeRes + '<br/>'
         else:
-            node = nodeService.read(nodeId)
-            res = sendCode(node['codeOff'], node['iterations'])
-            if len(res) > 0:
-                setNodeState(node['id'], 0)
+            res = switchNode(nodeId, 0)
 
         return res
 
@@ -215,6 +218,9 @@ def create_app():
     @app.route('/static/<path:path>')
     def sendStaticResources(path):
         return send_from_directory('static', path)
+
+    # with app.app_context():
+    #        _ = EventTable(switchNode, interval=10)
 
     return app
 
