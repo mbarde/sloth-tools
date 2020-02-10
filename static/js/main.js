@@ -99,7 +99,8 @@ function showPopupForm(type='node', clickEvent=false, objId=false, urlSuffix='')
     container.innerHTML = ''
     container.insertAdjacentHTML('beforeend', xhttp.responseText)
     document.getElementById('popup-form').style.display = 'block'
-    document.getElementById('title').focus()
+    if (type==='node') document.getElementById('title').focus()
+    else document.getElementById('weekdays').focus()
   })
   xhttp.send()
   return false
@@ -123,18 +124,32 @@ function submitForm(callback) {
   xhttp.send(JSON.stringify(data))
 }
 
-function deleteNode(event, nodeId, nodeTitle) {
+function deleteNode(clickEvent, nodeId, nodeTitle) {
   if (!confirm(`Do you really want to delete node "${nodeTitle}"?`)) return
-  if (event) event.preventDefault()
+  if (clickEvent) clickEvent.preventDefault()
   var url = '/node/delete/' + nodeId
   var xhttp = new XMLHttpRequest()
   xhttp.open('DELETE', url)
-  xhttp.addEventListener('load', function(event) {
+  xhttp.addEventListener('load', function() {
     refreshNodes()
   })
   xhttp.send()
   return false
 }
+
+function deleteEvent(clickEvent, eventId, eventTitle, nodeId) {
+  if (!confirm(`Do you really want to delete event "${eventTitle}"?`)) return
+  if (clickEvent) clickEvent.preventDefault()
+  var url = '/event/delete/' + eventId
+  var xhttp = new XMLHttpRequest()
+  xhttp.open('DELETE', url)
+  xhttp.addEventListener('load', function() {
+    showEventList(nodeId)
+  })
+  xhttp.send()
+  return false
+}
+
 
 function showEventList(nodeId) {
   if (event) event.preventDefault()
@@ -146,7 +161,6 @@ function showEventList(nodeId) {
     container.innerHTML = ''
     container.insertAdjacentHTML('beforeend', xhttp.responseText)
     document.getElementById('popup-form').style.display = 'block'
-    document.getElementById('title').focus()
   })
   xhttp.send()
   return false

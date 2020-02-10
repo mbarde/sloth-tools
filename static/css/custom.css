@@ -104,6 +104,22 @@ ul.nodes li.slided {
   animation: slideleft 1.0s forwards;
 }
 
+ul.events {
+  font-size: 25px;
+  margin: 20px;
+  padding: 0;
+}
+
+ul.events li {
+  line-height: 45px;
+  list-style-type: none;
+}
+
+ul.events li:hover {
+  opacity: 0.5;
+  background: #B4D7A2;
+}
+
 @keyframes slideleft {
   from {
     margin-left: 0;
@@ -188,7 +204,7 @@ form label {
   margin-bottom: -10px;
 }
 
-form input {
+form input, select {
   display: inline;
   width: 90%;
   border: 1px solid #B4D7A2;

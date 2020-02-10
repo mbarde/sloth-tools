@@ -7,9 +7,17 @@
     {% else %}
       switch off
     {% endif %}
+    <button title="Delete event" class="danger float-right"
+            onclick="deleteEvent(event, {{event.id}}, '{{event.hour}}:{{event.minute}} -> {{event.switchOn}}', {{nodeId}})">🗑️
+    </button>
   </li>
   {% endfor %}
 </ul>
 
-<button id="btn-add-event" onclick="showPopupForm('event', false, false, '/{{ nodeId }}')">➕ Add event</button>
-<button class="btn-close danger" type="button" onclick="hidePopupForm()">Close</button>
+<button id="btn-add-event" class="button half-width float-left"
+        onclick="showPopupForm('event', false, false, '/{{nodeId}}')">➕ Add event
+</button>
+<button class="btn-close danger button half-width float-left" type="button"
+        onclick="hidePopupForm()">Close
+</button>
+<br style="clear:both"/>
