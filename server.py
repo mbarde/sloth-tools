@@ -173,10 +173,13 @@ def create_app():
             event['hour'] = 12
             event['minute'] = 0
 
+        nodeService = CRUDService('node')
+        node = nodeService.read(nodeId)
+
         return render_template(
-            './event.html', event=event, nodeId=nodeId,
+            './event.html', event=event,
             action='/event/create/' + str(nodeId), method='POST',
-            title='Add event', submitLabel='Create')
+            title='Add event for ' + node['title'], submitLabel='Create')
 
     @app.route('/event/read/<int:id>', methods=['GET'])
     def eventRead(id):
@@ -188,7 +191,11 @@ def create_app():
     def eventReadByNode(nodeId):
         eventService = CRUDService('event')
         events = eventService.readBy('nodeIdRef', nodeId)
-        return render_template('./events.html', events=events, nodeId=nodeId)
+
+        nodeService = CRUDService('node')
+        node = nodeService.read(nodeId)
+
+        return render_template('./events.html', events=events, node=node)
 
     @app.route('/event/update/<int:id>', methods=['GET', 'POST'])
     def eventUpdate(id):

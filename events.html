@@ -1,3 +1,4 @@
+<h1>Timed events for {{node.title}}</h1>
 <ul class="events">
   {% for event in events %}
   <li class="event">
@@ -8,14 +9,14 @@
       switch off
     {% endif %}
     <button title="Delete event" class="danger float-right"
-            onclick="deleteEvent(event, {{event.id}}, '{{event.hour}}:{{event.minute}} -> {{event.switchOn}}', {{nodeId}})">🗑️
+            onclick="deleteEvent(event, {{event.id}}, '{{event.hour}}:{{event.minute}} -> {{event.switchOn}}', {{node.id}})">🗑️
     </button>
   </li>
   {% endfor %}
 </ul>
 
 <button id="btn-add-event" class="button half-width float-left"
-        onclick="showPopupForm('event', false, false, '/{{nodeId}}')">➕ Add event
+        onclick="showPopupForm('event', false, false, '/{{node.id}}')">➕ Add event
 </button>
 <button class="btn-close danger button half-width float-left" type="button"
         onclick="hidePopupForm()">Close
