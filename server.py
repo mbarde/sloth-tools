@@ -164,6 +164,7 @@ def create_app():
             else:
                 event['switchOn'] = False
             if eventService.create(event):
+                eventTable.loadFromDB()
                 return 'OK'
 
         if event is None:
@@ -219,8 +220,8 @@ def create_app():
     def sendStaticResources(path):
         return send_from_directory('static', path)
 
-    # with app.app_context():
-    #        _ = EventTable(switchNode, interval=10)
+    with app.app_context():
+        eventTable = EventTable(app, switchNode, interval=10)
 
     return app
 

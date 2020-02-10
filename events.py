@@ -5,7 +5,8 @@ import time
 
 class EventTable():
 
-    def __init__(self, switchFunction, interval):
+    def __init__(self, app, switchFunction, interval):
+        self.app = app
         self.events = []
         self.interval = interval
         self.switchFunction = switchFunction
@@ -21,14 +22,15 @@ class EventTable():
         self.events = conn.execute(sql).fetchall()
 
     def checkEvents(self):
-        now = time.localtime()
-        nowTimeStr = self.getTimeStr(now.tm_hour, now.tm_min)
-        for event in self.events:
-            eventTimeStr = self.getTimeStr(event['hour'], event['minute'])
-            if (eventTimeStr > self.lastCheckTimeStr and eventTimeStr <= nowTimeStr):
-                self.performEvent(event)
-        self.lastCheckTimeStr = nowTimeStr
-        self.startTimer()
+        with self.app.app_context():
+            now = time.localtime()
+            nowTimeStr = self.getTimeStr(now.tm_hour, now.tm_min)
+            for event in self.events:
+                eventTimeStr = self.getTimeStr(event['hour'], event['minute'])
+                if (eventTimeStr > self.lastCheckTimeStr and eventTimeStr <= nowTimeStr):
+                    self.performEvent(event)
+            self.lastCheckTimeStr = nowTimeStr
+            self.startTimer()
 
     def getTimeStr(self, hour, minute):
         hourStr = str(hour).zfill(2)
@@ -36,7 +38,12 @@ class EventTable():
         return hourStr + minuteStr
 
     def performEvent(self, event):
-        print('performing:' + str(event))
+        print('Timed event for node {0}: Switch to {1}'.format(
+            event['nodeIdRef'], event['switchOn']))
+        stateId = 0
+        if event['switchOn']:
+            stateId = 1
+        self.switchFunction(event['nodeIdRef'], stateId)
 
     def startTimer(self):
         threading.Timer(self.interval, self.checkEvents).start()
