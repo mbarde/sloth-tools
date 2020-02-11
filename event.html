@@ -12,7 +12,7 @@
     <option value="True">On</option>
     <<option value="False">Off</option>
   </select>
-  <button class="btn-update" type="button" onclick="submitForm()">{{ submitLabel }}</button>
+  <button class="btn-update" type="button" onclick="submitForm(() => {showEventList({{ node.id }})})">{{ submitLabel }}</button>
   <button class="btn-close danger" type="button" onclick="hidePopupForm()">Close</button>
   <br style="clear: both"/>
 </form>

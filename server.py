@@ -177,7 +177,7 @@ def create_app():
         node = nodeService.read(nodeId)
 
         return render_template(
-            './event.html', event=event,
+            './event.html', event=event, node=node,
             action='/event/create/' + str(nodeId), method='POST',
             title='Add event for ' + node['title'], submitLabel='Create')
 
