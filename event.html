@@ -2,7 +2,36 @@
   <h1>{{title}}</h1>
   <input id="id" name="id" type="hidden" value="{{ event.id }}"/>
   <label>Weekdays</label>
-  <input id="weekdays" name="weekdays" type="text"/>
+  <br/>
+  <div class="cb-weekday">
+    <input id="monday" name="monday" type="checkbox" checked/>
+    <label for="monday">MO</label>
+  </div>
+  <div class="cb-weekday">
+    <input id="tuesday" name="tuesday" type="checkbox" checked/>
+    <label for="tuesday">TU</label>
+  </div>
+  <div class="cb-weekday">
+    <input id="wednesday" name="wednesday" type="checkbox" checked/>
+    <label for="wednesday">WE</label>
+  </div>
+  <div class="cb-weekday">
+    <input id="thursday" name="thursday" type="checkbox" checked/>
+    <label for="thursday">TH</label>
+  </div>
+  <div class="cb-weekday">
+    <input id="friday" name="friday" type="checkbox" checked/>
+    <label for="friday">FR</label>
+  </div>
+  <div class="cb-weekday">
+    <input id="saturday" name="saturday" type="checkbox" checked/>
+    <label for="saturday">SA</label>
+  </div>
+  <div class="cb-weekday">
+    <input id="sunday" name="sunday" type="checkbox" checked/>
+    <label for="sunday">SU</label>
+  </div>
+  <br/><br/>
   <label>Hour</label>
   <input id="hour" name="hour" type="number" min="0" max="23"/>
   <label>Minute</label>

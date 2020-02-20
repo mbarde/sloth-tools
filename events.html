@@ -8,6 +8,7 @@
     {% else %}
       switch off
     {% endif %}
+    {{event.weekdays}}
     <button title="Delete event" class="danger float-right"
             onclick="deleteEvent(event, {{event.id}}, '{{event.hour}}:{{event.minute}} -> {{event.switchOn}}', {{node.id}})">🗑️
     </button>

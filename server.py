@@ -6,6 +6,9 @@ from flask import send_from_directory
 from flask import Flask
 from service import CRUDService
 from utils import bits2int
+from utils import int2bits
+from utils import sqlrow2dict
+from utils import weekdays2bits
 
 import os
 import subprocess
@@ -159,10 +162,15 @@ def create_app():
         if jsonData is not None:
             event = jsonData
             event['nodeIdRef'] = nodeId
+
             if event['switchOn'] == 'True':
                 event['switchOn'] = True
             else:
                 event['switchOn'] = False
+
+            bits = weekdays2bits(event)
+            event['weekdays'] = bits2int(bits)
+
             if eventService.create(event):
                 eventTable.loadFromDB()
                 return 'OK'
@@ -190,7 +198,13 @@ def create_app():
     @app.route('/event/bynode/<int:nodeId>', methods=['GET'])
     def eventReadByNode(nodeId):
         eventService = CRUDService('event')
-        events = eventService.readBy('nodeIdRef', nodeId)
+        rows = eventService.readBy('nodeIdRef', nodeId)
+
+        events = []
+        for row in rows:
+            event = sqlrow2dict(row)
+            event['weekdays'] = int2bits(event['weekdays'])
+            events.append(event)
 
         nodeService = CRUDService('node')
         node = nodeService.read(nodeId)

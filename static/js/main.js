@@ -100,7 +100,6 @@ function showPopupForm(type='node', clickEvent=false, objId=false, urlSuffix='')
     container.insertAdjacentHTML('beforeend', xhttp.responseText)
     document.getElementById('popup-form').style.display = 'block'
     if (type==='node') document.getElementById('title').focus()
-    else document.getElementById('weekdays').focus()
   })
   xhttp.send()
   return false
@@ -204,13 +203,17 @@ function unslideAll() {
 function form2JSON(form) {
   var obj = {}
   var elements = form.querySelectorAll('input, select, textarea')
-  for( var i = 0; i < elements.length; ++i ) {
+  for (var i = 0; i < elements.length; ++i) {
     var element = elements[i]
     var name = element.name
     var value = element.value
 
-    if( name ) {
-      obj[ name ] = value
+    if(name) {
+      if (element.type === 'checkbox') {
+        if (element.checked) obj[name] = value
+      } else {
+        obj[name] = value
+      }
     }
   }
   return obj

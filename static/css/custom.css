@@ -219,6 +219,27 @@ form input:hover {
   border-color: #313131
 }
 
+.cb-weekday {
+  width: auto;
+  float: left;
+}
+
+.cb-weekday input {
+  display: none;
+}
+
+.cb-weekday label {
+  background: #999;
+  color: white;
+  padding: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.cb-weekday input:checked ~ label {
+  background: #B4D7A2;
+}
+
 div.popup form button.btn-update {
   width: 50%;
   float: left;
