@@ -167,6 +167,7 @@ function showEventList(nodeId) {
 
 function onToolClicked(element, event) {
   event.preventDefault()
+  event.stopPropagation()
   unslideAll()
   element.style.display = 'none'
   var liElement = element.parentElement
@@ -224,6 +225,7 @@ var blurred = false
 animateCSS('#sloth', 'bounceInDown')
 refreshNodes()
 
+window.addEventListener('click', unslideAll)
 
 window.addEventListener('blur', function() {
   blurred = true
