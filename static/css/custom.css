@@ -72,7 +72,6 @@ ul.nodes {
 ul.nodes li.node {
   overflow: hidden;
   margin-bottom: 15px;
-  animation: slideback 1.0s forwards;
 }
 
 ul.nodes li.node.disabled {
@@ -106,6 +105,10 @@ ul.nodes li .hidden-tools button {
 
 ul.nodes li.slided {
   animation: slideleft 1.0s forwards;
+}
+
+ul.nodes li.unslided {
+  animation: slideback 1.0s forwards;
 }
 
 ul.events {

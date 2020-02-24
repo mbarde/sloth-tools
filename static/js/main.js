@@ -179,11 +179,13 @@ function slideLi(liElement) {
   var hiddenTools = liElement.getElementsByClassName('hidden-tools')[0]
   hiddenTools.style.display = 'inline-block'
   animateCSSElement(hiddenTools, 'slideInRight')
+  liElement.classList.remove('unslided')
   liElement.classList.add('slided')
 }
 
 function unslideLi(liElement) {
   liElement.classList.remove('slided')
+  liElement.classList.add('unslided')
   var tool = liElement.getElementsByClassName('tool')[0]
   tool.style.display = 'inline-block'
   var hiddenTools = liElement.getElementsByClassName('hidden-tools')[0]
