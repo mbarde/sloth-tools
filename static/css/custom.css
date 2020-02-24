@@ -36,6 +36,11 @@ body {
   overflow-x: hidden;
 }
 
+.container-fluid {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 button {
   display: block;
   background: #B4D7A2;
@@ -62,16 +67,18 @@ button.danger {
 
 div.container-nodes {
   padding: 20px 0 20px 20px;
+  overflow-x: hidden;
 }
 
 ul.nodes {
   list-style: none;
   padding-left: 0;
+  overflow-x: hidden;
 }
 
 ul.nodes li.node {
-  overflow: hidden;
   margin-bottom: 15px;
+  overflow: hidden;
 }
 
 ul.nodes li.node.disabled {
