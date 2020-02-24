@@ -33,6 +33,7 @@
 body {
   margin: 0;
   font-family: 'Barlow', sans-serif;
+  overflow-x: hidden;
 }
 
 button {
@@ -80,10 +81,12 @@ ul.nodes li.node.disabled {
 }
 
 ul.nodes li .tool {
-  float: right;
+  display: inline-block;
   cursor: pointer;
   margin-top: 15px;
   margin-right: 20px;
+  position: absolute;
+  right: 0;
 }
 
 ul.nodes li .tool:hover {
@@ -92,7 +95,8 @@ ul.nodes li .tool:hover {
 
 ul.nodes li .hidden-tools {
   display: none;
-  float: right;
+  position: absolute;
+  right: 0;
 }
 
 ul.nodes li .hidden-tools button {
