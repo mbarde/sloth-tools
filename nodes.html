@@ -10,9 +10,9 @@
     <label for="switch-{{ node.id }}" class="label-for-switch">{{ node.title }}</label>
     <span class="tool" onclick="onToolClicked(this, event)">⚙️</span>
     <div class="hidden-tools">
-      <button title="Delete node" onclick="deleteNode(event, {{ node.id }}, '{{ node.title }}')" class="danger">🗑️</button>
-      <button title="Edit node" onclick="showPopupForm('node', event, {{ node.id }})" class="success">🖊️</button>
-      <button title="Edit events" onclick="showEventList({{ node.id }})" class="boring">📅</button>
+      <button title="Delete node" onclick="deleteNode(event, {{ node.id }}, '{{ node.title }}')" class="transparent">🗑️</button>
+      <button title="Edit node" onclick="showPopupForm('node', event, {{ node.id }})" class="transparent">🖊️</button>
+      <button title="Edit events" onclick="showEventList({{ node.id }})" class="transparent">📅</button>
     <div>
   </li>
   {% endfor %}

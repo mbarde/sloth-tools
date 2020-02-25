@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from events import EventTable
 from flask import escape
 from flask import render_template
@@ -6,6 +7,7 @@ from flask import send_from_directory
 from flask import Flask
 from service import CRUDService
 from utils import bits2int
+from utils import getWeekdays
 from utils import int2bits
 from utils import sqlrow2dict
 from utils import weekdays2bits
@@ -203,7 +205,23 @@ def create_app():
         events = []
         for row in rows:
             event = sqlrow2dict(row)
-            event['weekdays'] = int2bits(event['weekdays'])
+
+            event['hour'] = str(event['hour']).zfill(2)
+            event['minute'] = str(event['minute']).zfill(2)
+
+            if event['switchOn'] == 0:
+                event['switchOn'] = 'off'
+            else:
+                event['switchOn'] = 'on'
+
+            bits = int2bits(event['weekdays'])
+            event['weekdays'] = OrderedDict()
+            days = getWeekdays()
+            i = 0
+            for day in days:
+                event['weekdays'][day] = bits[i]
+                i += 1
+
             events.append(event)
 
         nodeService = CRUDService('node')

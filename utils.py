@@ -13,14 +13,18 @@ def int2bits(n):
 
 def weekdays2bits(weekdaysDict):
     bitlist = []
-    weekdays = ['monday', 'tuesday', 'wednesday',
-                'thursday', 'friday', 'saturday', 'sunday']
+    weekdays = getWeekdays()
     for day in weekdays:
         if day in weekdaysDict:
             bitlist.append(1)
         else:
             bitlist.append(0)
     return bitlist
+
+
+def getWeekdays():
+    return ['monday', 'tuesday', 'wednesday',
+            'thursday', 'friday', 'saturday', 'sunday']
 
 
 def sqlrow2dict(row):

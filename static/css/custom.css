@@ -65,14 +65,18 @@ button.danger {
   background: #D7A2B4;
 }
 
+button.transparent {
+  background: none;
+}
+
 div.container-nodes {
-  padding: 20px 0 20px 20px;
+  padding: 20px 0 20px 0;
   overflow-x: hidden;
 }
 
 ul.nodes {
   list-style: none;
-  padding-left: 0;
+  padding-left: 20px;
   overflow-x: hidden;
 }
 
@@ -125,30 +129,66 @@ ul.events {
 }
 
 ul.events li {
+  border: 1px solid white;
   line-height: 45px;
   list-style-type: none;
 }
 
 ul.events li:hover {
-  opacity: 0.5;
-  background: #B4D7A2;
+  border: 1px solid #B4D7A2;
+}
+
+li.event ul.weekdays {
+  display: inline-block;
+}
+
+li.event ul.weekdays li {
+  background: black;
+  color: white;
+  float: left;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 16px;
+  margin-right: 5px;
+  padding: 2px;
+}
+
+li.event ul.weekdays li:hover {
+  opacity: 1.0;
+}
+
+@media (max-width: 650px) {
+  li.event ul.weekdays {
+    display: block;
+    float: none;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+
+  li.event button {
+    margin-top: -65px;
+  }
 }
 
 @keyframes slideleft {
   from {
     margin-left: 0;
+    background: transparent;
   }
   to {
     margin-left: -100px;
+    background: #D5ECC9;
   }
 }
 
 @keyframes slideback {
   from {
     margin-left: -100px;
+    background: #D5ECC9;
   }
   to {
     margin-left: 0;
+    background: transparent;
   }
 }
 
@@ -190,7 +230,7 @@ div.card img {
 }
 
 div.popup {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
