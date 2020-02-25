@@ -139,11 +139,15 @@ ul.events li {
 }
 
 ul.events li:hover {
-  border: 1px solid #B4D7A2;
+  border-bottom: 1px solid #B4D7A2;
 }
 
 li.event ul.weekdays {
   display: inline-block;
+}
+
+li.event ul.weekdays:blank {
+  display: none;
 }
 
 li.event ul.weekdays li {
@@ -251,7 +255,7 @@ div.popup .container {
   margin-top: 20%;
 }
 
-h1 {
+h1, h2, h3 {
   padding-top: 10px;
   margin: 10px;
 }

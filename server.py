@@ -174,6 +174,7 @@ def create_app():
             event['weekdays'] = bits2int(bits)
 
             if eventService.create(event):
+                # update eventTable:
                 eventTable.loadFromDB()
                 return 'OK'
 
