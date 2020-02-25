@@ -1,3 +1,5 @@
+from utils import int2bits
+
 import db
 import threading
 import time
@@ -26,6 +28,9 @@ class EventTable():
             now = time.localtime()
             nowTimeStr = self.getTimeStr(now.tm_hour, now.tm_min)
             for event in self.events:
+                eventWeekdays = int2bits(event['weekdays'])
+                if eventWeekdays[now.tm_wday] == 0:
+                    continue
                 eventTimeStr = self.getTimeStr(event['hour'], event['minute'])
                 if (eventTimeStr > self.lastCheckTimeStr and eventTimeStr <= nowTimeStr):
                     self.performEvent(event)
