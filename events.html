@@ -2,7 +2,7 @@
 <ul class="events">
   {% for event in events %}
   <li class="event">
-    {{event.hour}}:{{event.minute}} → {{event.switchOn}}
+    <span class="mono">{{event.hour}}:{{event.minute}}</span> → {{event.switchOn}}
     <ul class="weekdays">
       {% for day, value in event.weekdays.items() %}
         {% if value > 0 %}

@@ -6,9 +6,13 @@ def bits2int(bitlist):
 
 
 def int2bits(n):
+    weekdaysCount = 7
     if not isinstance(n, int):
-        return [0] * 7
-    return [1 if digit == '1' else 0 for digit in bin(n)[2:]]
+        return [0] * weekdaysCount
+    bits = [1 if digit == '1' else 0 for digit in bin(n)[2:]]
+    # make sure to return always list with 7 items:
+    bits = [0] * (weekdaysCount - len(bits)) + bits
+    return bits
 
 
 def weekdays2bits(weekdaysDict):

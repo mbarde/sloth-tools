@@ -151,7 +151,6 @@ function deleteEvent(clickEvent, eventId, eventTitle, nodeId) {
 
 
 function showEventList(nodeId) {
-  if (event) event.preventDefault()
   var container = document.querySelector('div.popup .container')
   var url = '/event/bynode/' + nodeId
   var xhttp = new XMLHttpRequest()

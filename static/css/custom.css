@@ -30,6 +30,10 @@
   float: right;
 }
 
+.mono {
+  font-family: monospace;
+}
+
 body {
   margin: 0;
   font-family: 'Barlow', sans-serif;
