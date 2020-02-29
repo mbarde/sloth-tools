@@ -36,7 +36,10 @@ flask init-db
 env FLASK_APP=server.py flask run --host=0.0.0.0
 ```
 
+
 ## Deploy for production
+
+This application is based on [Flask](https://flask.palletsprojects.com/en/1.1.x/), so you should take a look at its official [deployment guidelines](https://flask.palletsprojects.com/en/1.1.x/tutorial/deploy/#run-with-a-production-server).
 
 ### Set timezone
 
