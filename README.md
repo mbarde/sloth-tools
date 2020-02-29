@@ -2,8 +2,9 @@
 ## Setup
 
 ```
-sudo apt install python3-flask
-sudo apt-get install python3-opencv
+git clone https://github.com/mbarde/sloth-tools.git
+cd sloth-tools
+pip install -r requirements.txt
 ```
 
 Setup database:
