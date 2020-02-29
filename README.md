@@ -1,3 +1,13 @@
+# Sloth tools
+
+Web application for controlling remote-controlled power sockets at home via smartphone using a [Raspberry Pi and a 433Mhz transmitter](https://tutorials-raspberrypi.com/control-raspberry-pi-wireless-sockets-433mhz-tutorial/).
+
+![enter image description here](https://raw.githubusercontent.com/mbarde/sloth-tools/master/docs/slothtools.gif)
+
+## Prerequisites
+
+* Hardware set up as described [here](https://tutorials-raspberrypi.com/control-raspberry-pi-wireless-sockets-433mhz-tutorial/)
+* [Wiring Pi](http://wiringpi.com/) (GPIO Interface library for the Raspberry Pi)
 
 ## Setup
 
@@ -7,7 +17,7 @@ cd sloth-tools
 pip install -r requirements.txt
 ```
 
-Setup database:
+Setup database (once!)
 
 ```
 export FLASK_APP=server.py
