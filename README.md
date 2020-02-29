@@ -1,3 +1,4 @@
+
 # Sloth tools
 
 Web application for controlling remote-controlled power sockets at home via smartphone using a [Raspberry Pi and a 433Mhz transmitter](https://tutorials-raspberrypi.com/control-raspberry-pi-wireless-sockets-433mhz-tutorial/).
@@ -6,31 +7,36 @@ Web application for controlling remote-controlled power sockets at home via smar
 
 ## Prerequisites
 
-* Hardware set up as described [here](https://tutorials-raspberrypi.com/control-raspberry-pi-wireless-sockets-433mhz-tutorial/)
-* [Wiring Pi](http://wiringpi.com/) (GPIO Interface library for the Raspberry Pi)
+Hardware and [433Mhz library from Ninjablocks](https://github.com/ninjablocks/433Utils.git) set up as described [here](https://tutorials-raspberrypi.com/control-raspberry-pi-wireless-sockets-433mhz-tutorial/).
 
 ## Setup
 
+### 1. Install
 ```
 git clone https://github.com/mbarde/sloth-tools.git
 cd sloth-tools
 pip install -r requirements.txt
 ```
 
-Setup database (once!)
+### 2. Configure
+
+Edit the variable [`codesendBinPath`](https://github.com/mbarde/sloth-tools/blob/master/server.py#L22) in `server.py` to make sure it points to the compiled codesend-binary (see [prerequisites](#Prerequisites)).
+
+### 3. Setup database (once!)
 
 ```
 export FLASK_APP=server.py
 flask init-db
 ```
 
-## Run in dev mode:
+
+## Run in dev mode
 
 ```
 env FLASK_APP=server.py flask run --host=0.0.0.0
 ```
 
-## Deploy for production:
+## Deploy for production
 
 ### Set timezone
 
