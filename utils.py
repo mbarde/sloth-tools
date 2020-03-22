@@ -1,3 +1,6 @@
+import json
+
+
 def bits2int(bitlist):
     out = 0
     for bit in bitlist:
@@ -33,3 +36,10 @@ def getWeekdays():
 
 def sqlrow2dict(row):
     return dict(zip(row.keys(), row))
+
+
+def config2dict(filename):
+    with open(filename, 'r') as configFile:
+        data = configFile.read()
+    obj = json.loads(data)
+    return obj

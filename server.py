@@ -7,6 +7,7 @@ from flask import send_from_directory
 from flask import Flask
 from service import CRUDService
 from utils import bits2int
+from utils import config2dict
 from utils import getWeekdays
 from utils import int2bits
 from utils import sqlrow2dict
@@ -17,9 +18,12 @@ import subprocess
 
 
 def create_app():
+
+    config = config2dict('config.json')
+
     # absolute path to the codesend binary
     # from https://github.com/ninjablocks/433Utils
-    codesendBinPath = '/home/ubuntu/433Utils/RPi_utils/codesend'
+    codesendBinPath = config['codesend-bin-path']
 
     app = Flask(__name__,
                 template_folder='.',

@@ -20,7 +20,7 @@ pip install -r requirements.txt
 
 ### 2. Configure
 
-Edit the variable [`codesendBinPath`](https://github.com/mbarde/sloth-tools/blob/master/server.py#L22) in `server.py` to make sure it points to the compiled codesend-binary (see [prerequisites](#Prerequisites)).
+Edit the variable `codesend-bin-path` in `config.json` to make sure it points to the compiled codesend-binary (see [prerequisites](#Prerequisites)).
 
 ### 3. Setup database (once!)
 
