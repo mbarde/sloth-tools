@@ -8,9 +8,12 @@ from flask import Flask
 from service import CRUDService
 from utils import bits2int
 from utils import config2dict
+from utils import getSunriseTime
+from utils import getSunsetTime
 from utils import getWeekdays
 from utils import int2bits
 from utils import sqlrow2dict
+from utils import timetuple2str
 from utils import weekdays2bits
 
 import os
@@ -191,9 +194,14 @@ def create_app():
         nodeService = CRUDService('node')
         node = nodeService.read(nodeId)
 
+        sunriseTime = getSunriseTime(config['longitude'], config['latitude'])
+        sunsetTime = getSunsetTime(config['longitude'], config['latitude'])
+
         return render_template(
             './event.html', event=event, node=node,
             action='/event/create/' + str(nodeId), method='POST',
+            sunrise=timetuple2str(sunriseTime),
+            sunset=timetuple2str(sunsetTime),
             title='Add event for ' + node['title'], submitLabel='Create')
 
     @app.route('/event/read/<int:id>', methods=['GET'])

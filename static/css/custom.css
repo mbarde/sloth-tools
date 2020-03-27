@@ -281,6 +281,12 @@ form input:hover {
   border-color: #313131
 }
 
+form fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
 .cb-weekday {
   width: auto;
   float: left;

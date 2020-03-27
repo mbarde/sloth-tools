@@ -136,34 +136,6 @@ function deleteNode(clickEvent, nodeId, nodeTitle) {
   return false
 }
 
-function deleteEvent(clickEvent, eventId, eventTitle, nodeId) {
-  if (!confirm(`Do you really want to delete event "${eventTitle}"?`)) return
-  if (clickEvent) clickEvent.preventDefault()
-  var url = '/event/delete/' + eventId
-  var xhttp = new XMLHttpRequest()
-  xhttp.open('DELETE', url)
-  xhttp.addEventListener('load', function() {
-    showEventList(nodeId)
-  })
-  xhttp.send()
-  return false
-}
-
-
-function showEventList(nodeId) {
-  var container = document.querySelector('div.popup .container')
-  var url = '/event/bynode/' + nodeId
-  var xhttp = new XMLHttpRequest()
-  xhttp.open('GET', url)
-  xhttp.addEventListener('load', function(event) {
-    container.innerHTML = ''
-    container.insertAdjacentHTML('beforeend', xhttp.responseText)
-    document.getElementById('popup-form').style.display = 'block'
-  })
-  xhttp.send()
-  return false
-}
-
 function onToolClicked(element, event) {
   event.preventDefault()
   event.stopPropagation()

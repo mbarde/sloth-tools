@@ -32,10 +32,27 @@
     <label for="sunday">SU</label>
   </div>
   <br/><br/>
-  <label>Hour (0 - 23)</label>
-  <input id="hour" name="hour" type="number" min="0" max="23"/>
-  <label>Minute (0 - 59)</label>
-  <input id="minute" name="minute" type="number" min="0" max="59"/>
+  <select id="sel-time-mode" onchange="changeEventTimeMode(this)">
+    <option value="fixed">Fixed time</option>
+    <option value="sunrise">🌅 Sunrise (today: {{ sunrise }})</option>
+    <option value="sunset">🌇 Sunset (today: {{ sunset }})</option>
+  </select>
+  <fieldset id="fieldset-fixed">
+    <label>Hour (0 - 23)</label>
+    <input id="hour" name="hour" type="number" min="0" max="23"/>
+    <label>Minute (0 - 59)</label>
+    <input id="minute" name="minute" type="number" min="0" max="59"/>
+  </fieldset>
+  <fieldset id="fieldset-sunrise" style="display: none">
+    <label>Sunrise offset (in minutes)</label>
+    <input id="sunriseOffset" name="sunriseOffset" type="number"/>
+  </fieldset>
+  <fieldset id="fieldset-sunset" style="display: none">
+    <label>Sunset offset (in minutes)</label>
+    <input id="sunsetOffset" name="sunsetOffset" type="number"/>
+  </fieldset>
+  <label>Random offset (in minutes)</label>
+  <input id="randomOffset" name="randomOffset" type="number" min="0"/>
   <label>Action</label>
   <select id="switchOn" name="switchOn">
     <option value="True">On</option>

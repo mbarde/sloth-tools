@@ -67,9 +67,23 @@ def utc2local_datetime(utc):
     return utc + offset
 
 
+def getSunriseTime(longitude, latitude):
+    from sun import Sun
+    coords = {'longitude': longitude, 'latitude': latitude}
+    sun = Sun()
+    sunset = sun.getSunriseTime(coords)
+    return utc2local_time(sunset['hr'], sunset['min'])
+
+
 def getSunsetTime(longitude, latitude):
     from sun import Sun
-    coords = {'longitude': 7.56, 'latitude': 50.356}
+    coords = {'longitude': longitude, 'latitude': latitude}
     sun = Sun()
     sunset = sun.getSunsetTime(coords)
     return utc2local_time(sunset['hr'], sunset['min'])
+
+
+def timetuple2str(time_tuple):
+    hourStr = str(time_tuple[0]).zfill(2)
+    minuteStr = str(time_tuple[1]).zfill(2)
+    return '{0}:{1}'.format(hourStr, minuteStr)

@@ -17,5 +17,8 @@ CREATE TABLE event (
   switchOn BOOLEAN NOT NULL,
   weekdays INTEGER NOT NULL,
   hour INTEGER NOT NULL,
-  minute INTEGER NOT NULL
+  minute INTEGER NOT NULL,
+  sunsetOffset INTEGER,
+  sunriseOffset INTEGER,
+  randomOffset INTEGER,
 )
