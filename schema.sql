@@ -15,10 +15,11 @@ CREATE TABLE event (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   nodeIdRef INTEGER NOT NULL,
   switchOn BOOLEAN NOT NULL,
+  mode INTEGER NOT NULL, /* 0: fixed, 1: sunrise, 2: sunset */
   weekdays INTEGER NOT NULL,
   hour INTEGER NOT NULL,
   minute INTEGER NOT NULL,
-  sunsetOffset INTEGER,
-  sunriseOffset INTEGER,
-  randomOffset INTEGER,
-)
+  sunriseOffset INTEGER NOT NULL, /* offset in minutes (can be + or -) */
+  sunsetOffset INTEGER NOT NULL, /* offset in minutes (can be + or -) */
+  randomOffset INTEGER NOT NULL /* offset in minutes (should only be +) */
+);
