@@ -34,6 +34,10 @@
   font-family: monospace;
 }
 
+.mono .small {
+  font-size: 65%;
+}
+
 body {
   margin: 0;
   font-family: 'Barlow', sans-serif;

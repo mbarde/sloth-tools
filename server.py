@@ -8,6 +8,7 @@ from flask import Flask
 from service import CRUDService
 from utils import bits2int
 from utils import config2dict
+from utils import event2str
 from utils import getSunriseTime
 from utils import getSunsetTime
 from utils import getWeekdays
@@ -228,10 +229,8 @@ def create_app():
             event['hour'] = str(event['hour']).zfill(2)
             event['minute'] = str(event['minute']).zfill(2)
 
-            if event['switchOn'] == 0:
-                event['switchOn'] = 'off'
-            else:
-                event['switchOn'] = 'on'
+            event['asStr'] = event2str(event, html=False)
+            event['asHtml'] = event2str(event, html=True)
 
             bits = int2bits(event['weekdays'])
             event['weekdays'] = OrderedDict()

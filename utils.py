@@ -95,6 +95,56 @@ def addOffsetToTimeTuple(timeTuple, offsetInMin):
     return (timeTuple[0] + offHours, timeTuple[1] + offMinutes)
 
 
+def event2str(event, html=False):
+    res = ''
+
+    if event['mode'] == 0:
+        res = timetuple2str((event['hour'], event['minute']))
+
+    elif event['mode'] == 1:
+        if html is True:
+            res = '<span title="sunrise">🌅</span>'
+        else:
+            res = '🌅'
+        if event['sunriseOffset'] > 0:
+            if html is True:
+                tmpStr = '<span class="small"> {0} {1} min.</span>'
+            else:
+                tmpStr = ' {0} {1} min.'
+            if event['sunriseOffset'] > 0:
+                res += tmpStr.format('+', str(event['sunriseOffset']))
+            else:
+                res += tmpStr.format('-', str(event['sunriseOffset']*-1))
+
+    elif event['mode'] == 2:
+        if html is True:
+            res = '<span title="sunset">🌇</span>'
+        else:
+            res = '🌇'
+        if html is True:
+            tmpStr = '<span class="small"> {0} {1} min.</span>'
+        else:
+            tmpStr = ' {0} {1} min.'
+        if event['sunsetOffset'] > 0:
+            res += tmpStr.format('+', str(event['sunsetOffset']))
+        else:
+            res += tmpStr.format('-', str(event['sunsetOffset']*-1))
+
+    if event['randomOffset'] != 0:
+        rStr = '(rand. +/- {0} min.)'
+        if html is True:
+            rStr = '<span title="random offset {0} min." class="small">' + rStr + '</span>'
+        res += ' ' + rStr.format(event['randomOffset'])
+
+    if event['switchOn'] == 0:
+        switchOnStr = 'off'
+    else:
+        switchOnStr = 'on'
+    res += ' → ' + switchOnStr
+
+    return res
+
+
 TIMED_EVENT_MODES = {
     'fixed': 0,
     'sunrise': 1,

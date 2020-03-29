@@ -2,7 +2,9 @@
 <ul class="events">
   {% for event in events %}
   <li class="event">
-    <span class="mono">{{event.hour}}:{{event.minute}}</span> → {{event.switchOn}}
+    <span class="mono">
+      {{ event.asHtml|safe }}
+    </span>
     <ul class="weekdays">
       {% for day, value in event.weekdays.items() %}
         {% if value > 0 %}
@@ -11,7 +13,7 @@
       {% endfor %}
     </ul>
     <button title="Delete event" class="transparent float-right"
-            onclick="deleteEvent(event, {{event.id}}, '{{event.hour}}:{{event.minute}} → {{event.switchOn}}', {{node.id}})">🗑️
+            onclick="deleteEvent(event, {{event.id}}, '{{event.asStr}}', {{node.id}})">🗑️
     </button>
   </li>
   {% endfor %}
