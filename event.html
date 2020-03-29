@@ -32,27 +32,27 @@
     <label for="sunday">SU</label>
   </div>
   <br/><br/>
-  <select id="sel-time-mode" onchange="changeEventTimeMode(this)">
+  <select id="sel-time-mode" name="mode" onchange="changeEventTimeMode(this)">
     <option value="fixed">Fixed time</option>
     <option value="sunrise">🌅 Sunrise (today: {{ sunrise }})</option>
     <option value="sunset">🌇 Sunset (today: {{ sunset }})</option>
   </select>
   <fieldset id="fieldset-fixed">
     <label>Hour (0 - 23)</label>
-    <input id="hour" name="hour" type="number" min="0" max="23"/>
+    <input id="hour" name="hour" type="number" min="0" max="23" value="{{ event.hour }}"/>
     <label>Minute (0 - 59)</label>
-    <input id="minute" name="minute" type="number" min="0" max="59"/>
+    <input id="minute" name="minute" type="number" min="0" max="59" value="{{ event.minute }}"/>
   </fieldset>
   <fieldset id="fieldset-sunrise" style="display: none">
     <label>Sunrise offset (in minutes)</label>
-    <input id="sunriseOffset" name="sunriseOffset" type="number"/>
+    <input id="sunriseOffset" name="sunriseOffset" type="number" value="{{ event.sunriseOffset }}"/>
   </fieldset>
   <fieldset id="fieldset-sunset" style="display: none">
     <label>Sunset offset (in minutes)</label>
-    <input id="sunsetOffset" name="sunsetOffset" type="number"/>
+    <input id="sunsetOffset" name="sunsetOffset" type="number" value="{{ event.sunsetOffset }}"/>
   </fieldset>
   <label>Random offset (in minutes)</label>
-  <input id="randomOffset" name="randomOffset" type="number" min="0"/>
+  <input id="randomOffset" name="randomOffset" type="number" min="0" value="{{ event.randomOffset }}"/>
   <label>Action</label>
   <select id="switchOn" name="switchOn">
     <option value="True">On</option>

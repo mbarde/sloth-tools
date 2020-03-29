@@ -15,6 +15,7 @@ from utils import int2bits
 from utils import sqlrow2dict
 from utils import timetuple2str
 from utils import weekdays2bits
+from utils import TIMED_EVENT_MODES
 
 import os
 import subprocess
@@ -180,9 +181,11 @@ def create_app():
             bits = weekdays2bits(event)
             event['weekdays'] = bits2int(bits)
 
+            event['mode'] = TIMED_EVENT_MODES[event['mode']]
+
             if eventService.create(event):
                 # update eventTable:
-                eventTable.loadFromDB()
+                app.eventTable.loadFromDB()
                 return 'OK'
 
         if event is None:
@@ -190,6 +193,9 @@ def create_app():
             event['weekdays'] = bits2int([] * 7)  # all day
             event['hour'] = 12
             event['minute'] = 0
+            event['sunriseOffset'] = 0
+            event['sunsetOffset'] = 0
+            event['randomOffset'] = 0
 
         nodeService = CRUDService('node')
         node = nodeService.read(nodeId)
@@ -273,7 +279,7 @@ def create_app():
         return send_from_directory('static', path)
 
     with app.app_context():
-        eventTable = EventTable(app, switchNode, interval=10)
+        app.eventTable = EventTable(app, config, switchNode, interval=10)
 
     return app
 

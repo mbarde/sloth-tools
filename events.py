@@ -1,4 +1,9 @@
+from random import randint
+from utils import addOffsetToTimeTuple
+from utils import getSunriseTime
+from utils import getSunsetTime
 from utils import int2bits
+from utils import sqlrow2dict
 
 import db
 import threading
@@ -7,8 +12,9 @@ import time
 
 class EventTable():
 
-    def __init__(self, app, switchFunction, interval):
+    def __init__(self, app, config, switchFunction, interval):
         self.app = app
+        self.config = config
         self.events = []
         self.interval = interval
         self.switchFunction = switchFunction
@@ -22,6 +28,29 @@ class EventTable():
         conn = db.get_db()
         sql = 'SELECT * FROM event'
         self.events = conn.execute(sql).fetchall()
+        self.events = [sqlrow2dict(event) for event in self.events]
+        self.computeDynamicTimes()
+        # self.printEvents()
+
+    # @TOOO: dynamic events need to be re-computed at least one time per day
+    def computeDynamicTimes(self):
+        for event in self.events:
+            if event['mode'] == 1:
+                sunrise = getSunriseTime(
+                    self.config['longitude'],
+                    self.config['latitude'])
+                (event['hour'], event['minute']) = addOffsetToTimeTuple(
+                    sunrise, event['sunriseOffset'])
+            if event['mode'] == 2:
+                sunset = getSunsetTime(
+                    self.config['longitude'],
+                    self.config['latitude'])
+                (event['hour'], event['minute']) = addOffsetToTimeTuple(
+                    sunset, event['sunsetOffset'])
+            if event['randomOffset'] != 0:
+                randomOffset = randint(-event['randomOffset'], event['randomOffset'])
+                (event['hour'], event['minute']) = addOffsetToTimeTuple(
+                    (event['hour'], event['minute']), randomOffset)
 
     def checkEvents(self):
         with self.app.app_context():
@@ -52,3 +81,10 @@ class EventTable():
 
     def startTimer(self):
         threading.Timer(self.interval, self.checkEvents).start()
+
+    # for debugging purposes
+    def printEvents(self):
+        for event in self.events:
+            for key in event.keys():
+                print('{0}: {1}'.format(key, event[key]))
+        print('')

@@ -87,3 +87,16 @@ def timetuple2str(time_tuple):
     hourStr = str(time_tuple[0]).zfill(2)
     minuteStr = str(time_tuple[1]).zfill(2)
     return '{0}:{1}'.format(hourStr, minuteStr)
+
+
+def addOffsetToTimeTuple(timeTuple, offsetInMin):
+    offHours = int(offsetInMin / 60)
+    offMinutes = offsetInMin - (offHours * 60)
+    return (timeTuple[0] + offHours, timeTuple[1] + offMinutes)
+
+
+TIMED_EVENT_MODES = {
+    'fixed': 0,
+    'sunrise': 1,
+    'sunset': 2,
+}
