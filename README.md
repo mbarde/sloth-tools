@@ -20,7 +20,10 @@ pip install -r requirements.txt
 
 ### 2. Configure
 
-Edit the variable `codesend-bin-path` in `config.json` to make sure it points to the compiled codesend-binary (see [prerequisites](#Prerequisites)).
+Edit `config.json`:
+
+* `codesend-bin-path`: (string) Path to the compiled codesend-binary (see [prerequisites](#Prerequisites))
+* `longitude` and `latitude`:  (float) Longitute and latitude of your location - needed for sunrise/sunset computation
 
 ### 3. Setup database (once!)
 
