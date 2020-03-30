@@ -87,4 +87,4 @@ class EventTable():
         for event in self.events:
             for key in event.keys():
                 print('{0}: {1}'.format(key, event[key]))
-        print('')
+            print('')

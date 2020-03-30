@@ -96,7 +96,7 @@ class Sun:
 
         # 10. Return
         hr = self.forceRange(int(UT), 24)
-        min = round((UT - int(UT))*60, 0)
+        min = round((UT - int(UT))*59, 0)
 
         return {
             'status': True,
