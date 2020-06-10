@@ -1,4 +1,5 @@
 from random import randint
+from sqlite3 import OperationalError
 from utils import addOffsetToTimeTuple
 from utils import getSunriseTime
 from utils import getSunsetTime
@@ -27,9 +28,12 @@ class EventTable():
     def loadFromDB(self):
         conn = db.get_db()
         sql = 'SELECT * FROM event'
-        self.events = conn.execute(sql).fetchall()
-        self.events = [sqlrow2dict(event) for event in self.events]
-        self.computeDynamicTimes()
+        try:
+            self.events = conn.execute(sql).fetchall()
+            self.events = [sqlrow2dict(event) for event in self.events]
+            self.computeDynamicTimes()
+        except OperationalError:
+            pass
         # self.printEvents()
 
     # @TOOO: dynamic events need to be re-computed at least one time per day

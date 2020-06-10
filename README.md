@@ -58,13 +58,13 @@ In combination with [waitress](https://pypi.org/project/waitress/) your service 
 
 ```
 [Unit]
-Description=Homecontrol
+Description=Sloth-Tools
 After=network.target
 
 [Service]
-User=ubuntu
-WorkingDirectory=/home/ubuntu/server
-ExecStart=/home/ubuntu/.local/bin/waitress-serve --port=5000 --call "server:create_app"
+User=pi
+WorkingDirectory=/home/pi/server
+ExecStart=/home/pi/.local/bin/waitress-serve --port=5000 --call "server:create_app"
 Restart=always
 
 [Install]
