@@ -1,3 +1,4 @@
+from datetime import datetime
 from random import randint
 from sqlite3 import OperationalError
 from utils import addOffsetToTimeTuple
@@ -18,11 +19,13 @@ class EventTable():
         self.config = config
         self.events = []
         self.interval = interval
+        self.lastDynamicTimesComputation = datetime.today()
         self.switchFunction = switchFunction
         self.timer = None
 
         now = time.localtime()
         self.lastCheckTimeStr = self.getTimeStr(now.tm_hour, now.tm_min)
+
         self.loadFromDB()
         self.checkEvents()
 
@@ -35,10 +38,9 @@ class EventTable():
             self.computeDynamicTimes()
         except OperationalError:
             pass
-        # self.printEvents()
 
-    # @TOOO: dynamic events need to be re-computed at least one time per day
     def computeDynamicTimes(self):
+        self.lastDynamicTimesComputation = datetime.today()
         for event in self.events:
             if event['mode'] == 1:
                 sunrise = getSunriseTime(
@@ -70,6 +72,9 @@ class EventTable():
                     self.performEvent(event)
             self.lastCheckTimeStr = nowTimeStr
             self.startTimer()
+            today = datetime.today()
+            if not self.isSameDate(today, self.lastDynamicTimesComputation):
+                self.computeDynamicTimes()
 
     def getTimeStr(self, hour, minute):
         hourStr = str(hour).zfill(2)
@@ -91,6 +96,11 @@ class EventTable():
     def stopTimer(self):
         if self.timer is not None:
             self.timer.cancel()
+
+    def isSameDate(self, date0, date1):
+        str0 = date0.strftime('%d.%m.%Y')
+        str1 = date1.strftime('%d.%m.%Y')
+        return str0 == str1
 
     # for debugging purposes
     def printEvents(self):
