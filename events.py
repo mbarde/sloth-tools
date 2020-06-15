@@ -19,6 +19,7 @@ class EventTable():
         self.events = []
         self.interval = interval
         self.switchFunction = switchFunction
+        self.timer = None
 
         now = time.localtime()
         self.lastCheckTimeStr = self.getTimeStr(now.tm_hour, now.tm_min)
@@ -84,7 +85,12 @@ class EventTable():
         self.switchFunction(event['nodeIdRef'], stateId)
 
     def startTimer(self):
-        threading.Timer(self.interval, self.checkEvents).start()
+        self.timer = threading.Timer(self.interval, self.checkEvents)
+        self.timer.start()
+
+    def stopTimer(self):
+        if self.timer is not None:
+            self.timer.cancel()
 
     # for debugging purposes
     def printEvents(self):

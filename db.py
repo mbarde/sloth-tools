@@ -36,6 +36,9 @@ def init_db_command():
     """Clear the existing data and create new tables."""
     init_db()
     click.echo('Initialized the database.')
+    # we have to stop timer manually here
+    # otherwise process will run forever
+    current_app.eventTable.stopTimer()
 
 
 def init_app(app):

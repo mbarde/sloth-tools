@@ -280,6 +280,13 @@ def create_app():
     with app.app_context():
         app.eventTable = EventTable(app, config, switchNode, interval=10)
 
+    # make sure timer is stopped when server stops
+    def stopEventTimer():
+        app.eventTable.stopTimer()
+
+    import atexit
+    atexit.register(stopEventTimer)
+
     return app
 
 
