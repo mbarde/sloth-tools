@@ -29,6 +29,11 @@ def create_app():
     # absolute path to the codesend binary
     # from https://github.com/ninjablocks/433Utils
     codesendBinPath = config['codesend-bin-path']
+    if not os.path.isfile(codesendBinPath):
+        print('\n\n\033[1mcodesend binary not found!')
+        print('Set correct path in config.json\033[0m')
+        print('(See README.md for more information.)\n\n')
+        exit()
 
     app = Flask(__name__,
                 template_folder='.',
