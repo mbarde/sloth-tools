@@ -3,11 +3,15 @@
 
 Web application for controlling remote-controlled power sockets at home via smartphone using a [Raspberry Pi and a 433Mhz transmitter](https://tutorials-raspberrypi.com/control-raspberry-pi-wireless-sockets-433mhz-tutorial/).
 
+Supports timed events - even based on current sunrise/sunset time.
+
 ![enter image description here](https://raw.githubusercontent.com/mbarde/sloth-tools/master/docs/slothtools.gif)
+
 
 ## Prerequisites
 
 Hardware and [433Mhz library from Ninjablocks](https://github.com/ninjablocks/433Utils.git) set up as described [here](https://tutorials-raspberrypi.com/control-raspberry-pi-wireless-sockets-433mhz-tutorial/).
+
 
 ## Setup
 
@@ -15,7 +19,7 @@ Hardware and [433Mhz library from Ninjablocks](https://github.com/ninjablocks/43
 ```
 git clone https://github.com/mbarde/sloth-tools.git
 cd sloth-tools
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ### 2. Configure
