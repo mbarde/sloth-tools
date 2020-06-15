@@ -2,7 +2,6 @@
 # Sloth tools
 
 Web application for controlling remote-controlled power sockets at home via smartphone using a [Raspberry Pi and a 433Mhz transmitter](https://tutorials-raspberrypi.com/control-raspberry-pi-wireless-sockets-433mhz-tutorial/).
-
 Supports timed events - even based on current sunrise/sunset time.
 
 ![enter image description here](https://raw.githubusercontent.com/mbarde/sloth-tools/master/docs/slothtools.gif)
