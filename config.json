@@ -1,5 +1,5 @@
 {
-  "codesend-bin-path": "/home/ubuntu/433Utils/RPi_utils/codesend",
+  "codesend-bin-path": "/home/pi/projects/433Utils/RPi_utils/codesend",
   "longitude": 7.56,
   "latitude": 50.356
 }

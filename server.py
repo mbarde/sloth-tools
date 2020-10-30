@@ -20,6 +20,7 @@ from utils import TIMED_EVENT_MODES
 
 import os
 import subprocess
+import time
 
 
 def create_app():
@@ -165,6 +166,17 @@ def create_app():
     def nodeDelete(id):
         nodeService = CRUDService('node')
         nodeService.delete(id)
+        return 'OK'
+
+    @app.route('/alarm', methods=['GET'])
+    def alarm():
+        nodeService = CRUDService('node')
+        alarmNode = 23
+        node = nodeService.read(id=alarmNode)
+        state = node['state']
+        switchNode(alarmNode, abs(state - 1))
+        time.sleep(1)
+        switchNode(alarmNode, state)
         return 'OK'
 
     # event API
