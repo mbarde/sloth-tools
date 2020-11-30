@@ -1,0 +1,332 @@
+@font-face {
+  font-family: 'Amatic SC';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Amatic SC Regular'), local('AmaticSC-Regular'), url(/static/fonts/AmaticSC-Regular.ttf) format('truetype');
+  /* latin */
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Barlow Regular'), local('Barlow-Regular'), url(/static/fonts/Barlow-Regular.ttf) format('truetype');
+  /* latin */
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+.half-width {
+  width: 50%;
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+.mono {
+  font-family: monospace;
+}
+
+.mono .small {
+  font-size: 65%;
+}
+
+body {
+  background: #1c252a;
+  font-family: 'Barlow', sans-serif;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+.container-fluid {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+button {
+  display: block;
+  background: #B4D7A2;
+  color: #313131;
+  font-size: 20px;
+  border: none;
+  padding: 10px;
+  min-height: 45px;
+  cursor: pointer;
+  font-family: 'Barlow', sans-serif;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+button.boring {
+  background: #ccc;
+}
+
+button.danger {
+  background: #D7A2B4;
+}
+
+button.transparent {
+  background: none;
+}
+
+div.container-nodes {
+  padding: 20px 0 20px 0;
+  overflow-x: hidden;
+}
+
+ul.nodes {
+  list-style: none;
+  padding-left: 20px;
+  overflow-x: hidden;
+}
+
+ul.nodes li.node {
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+
+ul.nodes li.node.disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+ul.nodes li .tool {
+  display: inline-block;
+  cursor: pointer;
+  margin-top: 15px;
+  margin-right: 20px;
+  position: absolute;
+  right: 0;
+}
+
+ul.nodes li .tool:hover {
+  opacity: 0.8;
+}
+
+ul.nodes li .hidden-tools {
+  display: none;
+  position: absolute;
+  right: 0;
+}
+
+ul.nodes li .hidden-tools button {
+  font-size: 25px;
+  float: right;
+}
+
+ul.nodes li.slided {
+  animation: slideleft 1.0s forwards;
+}
+
+ul.nodes li.unslided {
+  animation: slideback 1.0s forwards;
+}
+
+ul.events {
+  font-size: 25px;
+  margin: 20px;
+  padding: 0;
+}
+
+ul.events li {
+  border: 1px solid white;
+  line-height: 45px;
+  list-style-type: none;
+}
+
+ul.events li:hover {
+  border-bottom: 1px solid #B4D7A2;
+}
+
+li.event ul.weekdays {
+  display: inline-block;
+}
+
+li.event ul.weekdays:blank {
+  display: none;
+}
+
+li.event ul.weekdays li {
+  background: black;
+  color: white;
+  float: left;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 16px;
+  margin-right: 5px;
+  padding: 2px;
+}
+
+li.event ul.weekdays li:hover {
+  opacity: 1.0;
+}
+
+@media (max-width: 650px) {
+  li.event ul.weekdays {
+    display: block;
+    float: none;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+
+  li.event button {
+    margin-top: -65px;
+  }
+}
+
+@keyframes slideleft {
+  from {
+    margin-left: 0;
+    background: transparent;
+  }
+  to {
+    margin-left: -100px;
+    background: #D5ECC9;
+  }
+}
+
+@keyframes slideback {
+  from {
+    margin-left: -100px;
+    background: #D5ECC9;
+  }
+  to {
+    margin-left: 0;
+    background: transparent;
+  }
+}
+
+div.head {
+  padding: 5px;
+  background-color: #14191d;
+  color: white;
+}
+
+div.logo {
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: auto;
+  width: 275px;
+}
+
+div.logo img {
+  filter: brightness(500%);
+  margin-right: 10px;
+  width: 60px;
+}
+
+div.logo span {
+  color: #16a085;
+  top: 13px;
+  font-size: 1rem;
+  position: absolute;
+  font-style: italic;
+  font-family: 'Barlow', sans-serif;
+}
+
+div.card {
+  width: 640px;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+div.card img {
+  max-width: 100%;
+}
+
+div.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  display: none;
+}
+
+div.popup .container {
+  background: white;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20%;
+}
+
+h1, h2, h3 {
+  padding-top: 10px;
+  margin: 10px;
+}
+
+form label {
+  display: block;
+  margin-left: 10px;
+  margin-bottom: -10px;
+}
+
+form input, select {
+  display: inline;
+  width: 90%;
+  border: 1px solid #B4D7A2;
+  padding: 10px;
+  margin: 10px;
+  margin-left: 10px;
+}
+
+form input:active,
+form input:focus,
+form input:hover {
+  border-color: #313131
+}
+
+form fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cb-weekday {
+  width: auto;
+  float: left;
+}
+
+.cb-weekday input {
+  display: none;
+}
+
+.cb-weekday label {
+  background: #999;
+  color: white;
+  padding: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.cb-weekday input:checked ~ label {
+  background: #B4D7A2;
+}
+
+div.popup form button.btn-update {
+  width: 50%;
+  float: left;
+}
+
+div.popup form button.btn-close {
+  width: 50%;
+  float: right;
+}
+
+#btn-add-node {
+  width: 100%;
+  background: none;
+  margin-top: 20px;
+}
