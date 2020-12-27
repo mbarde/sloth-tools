@@ -4,7 +4,7 @@
     <label class="switch" style="float: left">
       <input type="checkbox" {{ 'checked' if node.state else '' }}
              id="switch-{{ node.id }}"
-             onclick="checkSwitch(this, event)" node-id="{{ node.id }}" />
+             onclick="onNodeClick(this, event)" node-id="{{ node.id }}" />
       <span class="slider round"></span>
     </label>
     <label for="switch-{{ node.id }}" class="label-for-switch">{{ node.title }}</label>
