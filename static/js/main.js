@@ -26,7 +26,7 @@ function setNodesDisabledState(disabled) {
 
 function onNodeClick(el, event) {
   jobQueue.addJob(() => {
-    return new Promise((resolve, reject) => {
+    return  new Promise((resolve, reject) => {
       checkSwitch(el, event).then(resolve)
     })
   })
@@ -58,7 +58,6 @@ function switchState(nodeId, state) {
     var xhttp = new XMLHttpRequest()
     xhttp.open('GET', url, true)
     xhttp.onreadystatechange = function() {
-      setNodesDisabledState(false)
       if (this.readyState !== 4 && this.status !== 200) {
         console.error('Request failed:')
         console.error(this)
@@ -209,6 +208,7 @@ function form2JSON(form) {
 
 var blurred = false
 var jobQueue = new JobQueue(5)
+jobQueue.onAllJobsDone = () => { setNodesDisabledState(false) }
 
 animateCSS('#sloth', 'bounceInDown')
 refreshNodes()

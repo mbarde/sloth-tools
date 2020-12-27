@@ -3,6 +3,9 @@ class JobQueue {
   constructor(maxJobCount) {
     this.jobs = []
     this.maxJobCount = maxJobCount
+
+    /* callbacks */
+    this.onAllJobsDone = null
   }
 
   addJob(promise) {
@@ -16,6 +19,7 @@ class JobQueue {
   callNext() {
     if (this.jobs.length === 0) {
       console.log('done!')
+      if (this.onAllJobsDone !== null) this.onAllJobsDone()
       return
     }
     console.log('next job ...')
