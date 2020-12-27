@@ -76,6 +76,16 @@ def create_app():
 
         return res
 
+    def toggleNode(nodeId):
+        nodeService = CRUDService('node')
+        node = nodeService.read(id=nodeId)
+        state = node['state']
+        res = switchNode(nodeId, abs(state - 1))
+        res += '<br/>'
+        time.sleep(1)
+        res += switchNode(nodeId, state)
+        return res
+
     @app.route('/on')
     def switchOn():
         nodeId = request.args.get('id')
@@ -105,6 +115,22 @@ def create_app():
                 res += nodeRes + '<br/>'
         else:
             res = switchNode(nodeId, 0)
+
+        return res
+
+    @app.route('/toggle')
+    def toggle():
+        nodeId = request.args.get('id')
+
+        if nodeId is None:
+            res = ''
+            nodeService = CRUDService('node')
+            nodes = nodeService.read()
+            for node in nodes:
+                nodeRes = toggleNode(node['id'])
+                res += nodeRes + '<br/>'
+        else:
+            res = toggleNode(nodeId)
 
         return res
 
@@ -166,17 +192,6 @@ def create_app():
     def nodeDelete(id):
         nodeService = CRUDService('node')
         nodeService.delete(id)
-        return 'OK'
-
-    @app.route('/alarm', methods=['GET'])
-    def alarm():
-        nodeService = CRUDService('node')
-        alarmNode = 23
-        node = nodeService.read(id=alarmNode)
-        state = node['state']
-        switchNode(alarmNode, abs(state - 1))
-        time.sleep(1)
-        switchNode(alarmNode, state)
         return 'OK'
 
     # event API
