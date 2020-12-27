@@ -5,6 +5,7 @@ class JobQueue {
     this.maxJobCount = maxJobCount
 
     /* callbacks */
+    this.onJobDone = null
     this.onAllJobsDone = null
   }
 
@@ -26,8 +27,13 @@ class JobQueue {
     console.log(this.jobs[0])
     this.jobs[0]().then(() => {
       this.jobs.shift()  // remove first item
+      if (this.onJobDone !== null) this.onJobDone()
       this.callNext()
     })
+  }
+
+  getJobCount() {
+    return this.jobs.length
   }
 
 }

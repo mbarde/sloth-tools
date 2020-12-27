@@ -30,6 +30,7 @@ function onNodeClick(el, event) {
       checkSwitch(el, event).then(resolve)
     })
   })
+  displayJobs()
 }
 
 function checkSwitch(el, event) {
@@ -187,6 +188,16 @@ function unslideAll() {
   }
 }
 
+function displayJobs() {
+  let jobCount = jobQueue.getJobCount()
+  var html = ''
+  for (var i = 1; i < jobCount; i++) {
+    html += '<div class="job"></div>'
+  }
+  let container = document.getElementById('jobs-container')
+  container.innerHTML = html
+}
+
 function form2JSON(form) {
   var obj = {}
   var elements = form.querySelectorAll('input, select, textarea')
@@ -208,6 +219,7 @@ function form2JSON(form) {
 
 var blurred = false
 var jobQueue = new JobQueue(5)
+jobQueue.onJobDone = displayJobs
 jobQueue.onAllJobsDone = () => { setNodesDisabledState(false) }
 
 animateCSS('#sloth', 'bounceInDown')
