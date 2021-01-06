@@ -65,7 +65,6 @@ function switchState(nodeId, state) {
       }
       resolve()
     }
-    console.log('send it!')
     xhttp.send()
   })
 }
@@ -189,13 +188,17 @@ function unslideAll() {
 }
 
 function displayJobs() {
-  let jobCount = jobQueue.getJobCount()
-  var html = ''
-  for (var i = 1; i < jobCount; i++) {
-    html += '<div class="job"></div>'
-  }
+  let waitingJobs = jobQueue.getJobCount() - 1
   let container = document.getElementById('jobs-container')
-  container.innerHTML = html
+  if (waitingJobs > 0) {
+    let counter = document.getElementById('jobs-counter')
+    var text = waitingJobs.toString() + ' request'
+    if (waitingJobs > 1) text += 's'
+    counter.innerHTML = text
+    container.style.display = 'block'
+  } else {
+    container.style.display = 'none'
+  }
 }
 
 function form2JSON(form) {
