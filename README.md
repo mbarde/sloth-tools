@@ -82,11 +82,11 @@ sudo systemctl enable homecontrol.service
 
 ## API
 
-Once running you can access Sloth Tools via the provided web application. But you can also directly interact with it by calling certain endpoints:
+Once running you can access Sloth Tools via the provided web application. But you can also directly interact with the backend by calling certain endpoints:
 
-* `on?id={ID}`: Put node with specified ID on
-* `off?id={ID}`: Put node with specified ID off
-* `toggle?id={ID}`: Toggle state of node with specified ID (aka. blink)
+* `/on?id={ID}`: Put node with specified ID on
+* `/off?id={ID}`: Put node with specified ID off
+* `/toggle?id={ID}`: Toggle state of node with specified ID (aka. blink)
 
 ### Motion detector
 
