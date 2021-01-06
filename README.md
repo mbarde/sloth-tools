@@ -79,3 +79,25 @@ Enable:
 ```
 sudo systemctl enable homecontrol.service
 ```
+
+## API
+
+Once running you can access Sloth Tools via the provided web application. But you can also directly interact with it by calling certain endpoints:
+
+* `on?id={ID}`: Put node with specified ID on
+* `off?id={ID}`: Put node with specified ID off
+* `toggle?id={ID}`: Toggle state of node with specified ID (aka. blink)
+
+### Motion detector
+
+For example you can use the motion detection library [Motion](https://motion-project.github.io/) to execute scripts which call these endpoints on certain motion events (see: https://motion-project.github.io/motion_config.html#OptTopic_Scripts).
+
+For example you could use following script to blink node 42 everytime a motion is detected (assuming Sloh Tools is running on the machine with the IP `192.168.0.13` on port `5000` in your network):
+
+```
+#!/bin/sh
+wget -O/dev/null 192.168.0.13:5000/toggle?id=42 -q
+```
+
+
+
