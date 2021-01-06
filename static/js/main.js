@@ -24,36 +24,49 @@ function setNodesDisabledState(disabled) {
   }
 }
 
+function onNodeClick(el, event) {
+  jobQueue.addJob(() => {
+    return  new Promise((resolve, reject) => {
+      checkSwitch(el, event).then(resolve)
+    })
+  })
+  displayJobs()
+}
+
 function checkSwitch(el, event) {
-  var nodeLiEl = el.parentElement.parentElement
-  if (nodeLiEl.classList.contains('disabled') ||
-      nodeLiEl.classList.contains('slided')) {
-    event.preventDefault()
-    return
-  }
-  unslideAll()
-  var nodeId = el.getAttribute('node-id')
-  if (el.checked) {
-    switchState(nodeId, 'on')
-  } else {
-    switchState(nodeId, 'off')
-  }
+  return new Promise((resolve, reject) => {
+    var nodeLiEl = el.parentElement.parentElement
+    if (nodeLiEl.classList.contains('slided')) {
+      event.preventDefault()
+      resolve()
+      return
+    }
+    unslideAll()
+    var nodeId = el.getAttribute('node-id')
+    if (el.checked) {
+      switchState(nodeId, 'on').then(resolve)
+    } else {
+      switchState(nodeId, 'off').then(resolve)
+    }
+  })
 }
 
 function switchState(nodeId, state) {
-  animateCSS('#sloth', 'swing')
-  setNodesDisabledState(true)
-  var url = '/' + state + '?id=' + nodeId
-  var xhttp = new XMLHttpRequest()
-  xhttp.open('GET', url, true)
-  xhttp.onreadystatechange = function() {
-    setNodesDisabledState(false)
-    if (this.readyState !== 4 && this.status !== 200) {
-      console.error('Request failed:')
-      console.error(this)
+  return new Promise((resolve, reject) => {
+    animateCSS('#sloth', 'swing')
+    setNodesDisabledState(true)
+    var url = '/' + state + '?id=' + nodeId
+    var xhttp = new XMLHttpRequest()
+    xhttp.open('GET', url, true)
+    xhttp.onreadystatechange = function() {
+      if (this.readyState !== 4 && this.status !== 200) {
+        console.error('Request failed:')
+        console.error(this)
+      }
+      resolve()
     }
-  }
-  xhttp.send()
+    xhttp.send()
+  })
 }
 
 function switchStateForAll(state) {
@@ -174,6 +187,20 @@ function unslideAll() {
   }
 }
 
+function displayJobs() {
+  let waitingJobs = jobQueue.getJobCount() - 1
+  let container = document.getElementById('jobs-container')
+  if (waitingJobs > 0) {
+    let counter = document.getElementById('jobs-counter')
+    var text = waitingJobs.toString() + ' request'
+    if (waitingJobs > 1) text += 's'
+    counter.innerHTML = text
+    container.style.display = 'block'
+  } else {
+    container.style.display = 'none'
+  }
+}
+
 function form2JSON(form) {
   var obj = {}
   var elements = form.querySelectorAll('input, select, textarea')
@@ -194,6 +221,9 @@ function form2JSON(form) {
 }
 
 var blurred = false
+var jobQueue = new JobQueue(5)
+jobQueue.onJobDone = displayJobs
+jobQueue.onAllJobsDone = () => { setNodesDisabledState(false) }
 
 animateCSS('#sloth', 'bounceInDown')
 refreshNodes()

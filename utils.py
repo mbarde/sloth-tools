@@ -106,7 +106,7 @@ def event2str(event, html=False):
             res = '<span title="sunrise">🌅</span>'
         else:
             res = '🌅'
-        if event['sunriseOffset'] > 0:
+        if event['sunriseOffset'] != 0:
             if html is True:
                 tmpStr = '<span class="small"> {0} {1} min.</span>'
             else:
@@ -121,14 +121,15 @@ def event2str(event, html=False):
             res = '<span title="sunset">🌇</span>'
         else:
             res = '🌇'
-        if html is True:
-            tmpStr = '<span class="small"> {0} {1} min.</span>'
-        else:
-            tmpStr = ' {0} {1} min.'
-        if event['sunsetOffset'] > 0:
-            res += tmpStr.format('+', str(event['sunsetOffset']))
-        else:
-            res += tmpStr.format('-', str(event['sunsetOffset']*-1))
+        if event['sunsetOffset'] != 0:
+            if html is True:
+                tmpStr = '<span class="small"> {0} {1} min.</span>'
+            else:
+                tmpStr = ' {0} {1} min.'
+            if event['sunsetOffset'] > 0:
+                res += tmpStr.format('+', str(event['sunsetOffset']))
+            else:
+                res += tmpStr.format('-', str(event['sunsetOffset']*-1))
 
     if event['randomOffset'] != 0:
         rStr = '(rand. +/- {0} min.)'

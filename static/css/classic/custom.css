@@ -77,6 +77,28 @@ button.transparent {
   background: none;
 }
 
+#jobs-container {
+  background: rgba(0.2, 0.2, 0.2, 0.2);
+  color: black;
+  display: none;
+  font-family: monospace;
+  font-weight: bold;
+  padding: 3px;
+  position: fixed;
+  text-align: center;
+  top: 0;
+  width: 100%;
+}
+
+#jobs-container div.job {
+  background-color: #eca88d;
+  flex-grow: 1;
+  height: 4px;
+  margin: 2px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
 div.container-nodes {
   padding: 20px 0 20px 0;
   overflow-x: hidden;
