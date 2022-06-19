@@ -146,7 +146,8 @@ def create_app():
         nodeService = CRUDService('node')
 
         node = None
-        jsonData = request.get_json()
+        jsonData = request.get_json(silent=True)
+
 
         if jsonData is not None:
             node = jsonData
@@ -173,7 +174,7 @@ def create_app():
         node = None
         nodeService = CRUDService('node')
 
-        jsonData = request.get_json()
+        jsonData = request.get_json(silent=True)
         if jsonData is not None:
             node = jsonData
             if nodeService.update(node):
@@ -200,7 +201,7 @@ def create_app():
         eventService = CRUDService('event')
 
         event = None
-        jsonData = request.get_json()
+        jsonData = request.get_json(silent=True)
 
         if jsonData is not None:
             event = jsonData
@@ -284,7 +285,7 @@ def create_app():
         event = None
         eventService = CRUDService('event')
 
-        jsonData = request.get_json()
+        jsonData = request.get_json(silent=True)
         if jsonData is not None:
             event = jsonData
             if eventService.update(event):
