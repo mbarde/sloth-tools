@@ -112,7 +112,10 @@ function showPopupForm(type='node', clickEvent=false, objId=false, urlSuffix='')
     container.innerHTML = ''
     container.insertAdjacentHTML('beforeend', xhttp.responseText)
     document.getElementById('popup-form').style.display = 'block'
-    if (type==='node') document.getElementById('title').focus()
+    if (type==='node') {
+      const title = document.getElementById('title')
+      if (title) title.focus()
+    }
   })
   xhttp.send()
   return false
