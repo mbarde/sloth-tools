@@ -52,7 +52,7 @@ def create_app():
             return 'codesend binary not found'
         args = ['sudo', codesendBinPath, code]
         FNULL = open(os.devnull, 'w')
-        for i in range(1, iterations):
+        for i in range(iterations):
             proc = subprocess.Popen(args, stdout=FNULL)
             proc.wait()
         return 'sent ({0}x): {1}'.format(escape(iterations), escape(code))
