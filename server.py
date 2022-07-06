@@ -47,10 +47,10 @@ def create_app():
     def index():
         return render_template('./index.html', title='Sloth Tools')
 
-    def sendCode(code, iterations):
+    def sendCode(code, protocol, pulselength, iterations):
         if not os.path.isfile(codesendBinPath):
             return 'codesend binary not found'
-        args = ['sudo', codesendBinPath, code]
+        args = ['sudo', codesendBinPath, code, protocol, pulselength]
         FNULL = open(os.devnull, 'w')
         for i in range(1, iterations):
             proc = subprocess.Popen(args, stdout=FNULL)
@@ -70,7 +70,7 @@ def create_app():
             stateStr = 'codeOff'
 
         node = nodeService.read(nodeId)
-        res = sendCode(node[stateStr], node['iterations'])
+        res = sendCode(node[stateStr], node['protocol'], node['pulselength'], node['iterations'])
         if len(res) > 0:
             setNodeState(node['id'], state)
 
@@ -156,6 +156,8 @@ def create_app():
 
         if node is None:
             node = nodeService.getEmpty()
+            node['protocol'] = ''
+            node['pulselength'] = ''
             node['iterations'] = '3'
 
         return render_template(
