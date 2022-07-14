@@ -69,6 +69,10 @@ button.boring {
   background: #ccc;
 }
 
+button.view {
+  background: #C89B84;
+}
+
 button.danger {
   background: #D7A2B4;
 }
@@ -332,6 +336,11 @@ form fieldset {
 
 .cb-weekday input:checked ~ label {
   background: #B4D7A2;
+}
+
+div.popup form button.btn-options {
+  width: 100%;
+  float: left;
 }
 
 div.popup form button.btn-update {
