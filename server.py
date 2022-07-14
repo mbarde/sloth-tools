@@ -158,7 +158,7 @@ def create_app():
             node = nodeService.getEmpty()
             node['protocol'] = ''
             node['pulselength'] = ''
-            node['iterations'] = '3'
+            node['iterations'] = '1'
 
         return render_template(
             './node.html', node=node,
