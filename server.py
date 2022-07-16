@@ -189,7 +189,7 @@ def create_app():
         return render_template(
             './node.html', node=node,
             action=actionUrl, method='POST',
-            title='Update node', submitLabel='Update')
+            title='Update node [id:' + str(id) + ']', submitLabel='Update')
 
     @app.route('/node/delete/<int:id>', methods=['DELETE'])
     def nodeDelete(id):
