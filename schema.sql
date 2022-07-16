@@ -6,7 +6,7 @@ CREATE TABLE node (
   codeOn TEXT NOT NULL,
   codeOff TEXT NOT NULL,
   protocol TEXT,
-  pulselenth TEXT,
+  pulselength TEXT,
   iterations INTEGER,
   state BOOLEAN DEFAULT FALSE
 );
