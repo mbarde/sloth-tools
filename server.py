@@ -291,6 +291,8 @@ def create_app():
         if jsonData is not None:
             event = jsonData
             if eventService.update(event):
+                # update eventTable:
+                app.eventTable.loadFromDB()
                 return 'OK'
 
         if event is None:
@@ -306,6 +308,8 @@ def create_app():
     def eventDelete(id):
         eventService = CRUDService('event')
         eventService.delete(id)
+        # update eventTable:
+        app.eventTable.loadFromDB()
         return 'OK'
 
     @app.route('/static/<path:path>')
