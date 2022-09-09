@@ -102,6 +102,7 @@ function refreshNodes() {
 
 function showPopupForm(type='node', clickEvent=false, objId=false, urlSuffix='') {
   if (clickEvent) clickEvent.preventDefault()
+  document.getElementById('btn-add-node').style.display = 'none'
   var container = document.querySelector('div.popup .container')
   var url = `/${type}/create`
   if (urlSuffix.length > 0) url += urlSuffix
@@ -121,8 +122,25 @@ function showPopupForm(type='node', clickEvent=false, objId=false, urlSuffix='')
   return false
 }
 
+function toggleOptions() {
+  var o = document.getElementById('optional');
+  var r = document.getElementById('required');
+  var b = document.getElementById('btn-options');
+  if (r.style.display == 'block') {
+    r.style.display = 'none'
+    o.style.display = 'block'
+    b.innerHTML = 'Show required values'
+  }
+  else {
+    r.style.display = 'block'
+    o.style.display = 'none'
+    b.innerHTML = 'Show optional values'
+  }
+}
+
 function hidePopupForm() {
   document.getElementById('popup-form').style.display = 'none'
+  document.getElementById('btn-add-node').style.display = 'block'  
 }
 
 function submitForm(callback) {

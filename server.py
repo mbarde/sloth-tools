@@ -47,10 +47,10 @@ def create_app():
     def index():
         return render_template('./index.html', title='Sloth Tools')
 
-    def sendCode(code, iterations):
+    def sendCode(code, protocol, pulselength, iterations):
         if not os.path.isfile(codesendBinPath):
             return 'codesend binary not found'
-        args = ['sudo', codesendBinPath, code]
+        args = ['sudo', codesendBinPath, code, protocol, pulselength]
         FNULL = open(os.devnull, 'w')
         for i in range(iterations):
             proc = subprocess.Popen(args, stdout=FNULL)
@@ -70,7 +70,7 @@ def create_app():
             stateStr = 'codeOff'
 
         node = nodeService.read(nodeId)
-        res = sendCode(node[stateStr], node['iterations'])
+        res = sendCode(node[stateStr], node['protocol'], node['pulselength'], node['iterations'])
         if len(res) > 0:
             setNodeState(node['id'], state)
 
@@ -156,7 +156,9 @@ def create_app():
 
         if node is None:
             node = nodeService.getEmpty()
-            node['iterations'] = '3'
+            node['protocol'] = ''
+            node['pulselength'] = ''
+            node['iterations'] = '1'
 
         return render_template(
             './node.html', node=node,
@@ -187,7 +189,7 @@ def create_app():
         return render_template(
             './node.html', node=node,
             action=actionUrl, method='POST',
-            title='Update node', submitLabel='Update')
+            title='Update node [id:' + str(id) + ']', submitLabel='Update')
 
     @app.route('/node/delete/<int:id>', methods=['DELETE'])
     def nodeDelete(id):

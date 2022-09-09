@@ -1,14 +1,23 @@
 <form id="form-popup" action="{{ action }}" method="{{ method }}">
-  <h1>{{title}}</h1>
+  <h1 style="text-align:center;">{{title}}</h1>
   <input id="id" name="id" type="hidden" value="{{ node.id }}"/>
-  <label>Title</label>
-  <input id="title" name="title" type="text" value="{{ node.title }}"/>
-  <label>Code on</label>
-  <input id="codeOn" name="codeOn" type="text" value="{{ node.codeOn }}"/>
-  <label>Code off</label>
-  <input id="codeOff" name="codeOff" type="text" value="{{ node.codeOff }}"/>
-  <label>Iterations</label>
-  <input id="iterations" name="iterations" type="text" value="{{ node.iterations }}"/>
+  <div id="required" style="display:block;">
+    <label>Title</label>
+    <input id="title" name="title" type="text" value="{{ node.title }}"/>
+    <label>Code on</label>
+    <input id="codeOn" name="codeOn" type="text" value="{{ node.codeOn }}"/>
+    <label>Code off</label>
+    <input id="codeOff" name="codeOff" type="text" value="{{ node.codeOff }}"/>
+  </div>
+  <div id="optional" style="display:none;">
+    <label>Protocol</label>
+    <input id="protocol" name="protocol" type="text" value="{{ node.protocol}}"/>
+    <label>Pulselength</label>
+    <input id="pulselength" name="pulselength" type="text" value="{{ node.pulselength}}"/>
+    <label>Iterations</label>
+    <input id="iterations" name="iterations" type="text" value="{{ node.iterations }}"/>
+  </div>
+  <button class="btn-options view" id="btn-options" type="button" onclick="toggleOptions()">Show optional values</button>
   <button class="btn-update" type="button" onclick="submitForm(refreshNodes)">{{ submitLabel }}</button>
   <button class="btn-close danger" type="button" onclick="hidePopupForm()">Close</button>
   <br style="clear: both"/>
