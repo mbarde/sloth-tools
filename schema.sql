@@ -5,8 +5,8 @@ CREATE TABLE node (
   title TEXT NOT NULL,
   codeOn TEXT NOT NULL,
   codeOff TEXT NOT NULL,
-  protocol TEXT,
-  pulselength TEXT,
+  protocol TEXT DEFAULT 0,
+  pulselength TEXT DEFAULT 0,
   iterations INTEGER,
   state BOOLEAN DEFAULT FALSE
 );
