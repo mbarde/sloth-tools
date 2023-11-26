@@ -1,6 +1,6 @@
 from collections import OrderedDict
 from events import EventTable
-from flask import escape
+from markupsafe import escape
 from flask import render_template
 from flask import request
 from flask import send_from_directory
