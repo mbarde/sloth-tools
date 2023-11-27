@@ -1,10 +1,10 @@
 from collections import OrderedDict
 from events import EventTable
-from markupsafe import escape
 from flask import render_template
 from flask import request
 from flask import send_from_directory
 from flask import Flask
+from markupsafe import escape
 from service import CRUDService
 from utils import bits2int
 from utils import config2dict
@@ -147,7 +147,6 @@ def create_app():
 
         node = None
         jsonData = request.get_json(silent=True)
-
 
         if jsonData is not None:
             node = jsonData
