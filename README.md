@@ -92,7 +92,7 @@ Once running you can access Sloth Tools via the provided web application. But yo
 
 For example you can use the motion detection library [Motion](https://motion-project.github.io/) to execute scripts which call these endpoints on certain motion events (see: https://motion-project.github.io/motion_config.html#OptTopic_Scripts).
 
-For example you could use following script to blink node 42 everytime a motion is detected (assuming Sloh Tools is running on the machine with the IP `192.168.0.13` on port `5000` in your network):
+For example you could use following script to blink node 42 everytime a motion is detected (assuming Sloth Tools is running on the machine with the IP `192.168.0.13` on port `5000` in your network):
 
 ```
 #!/bin/sh
