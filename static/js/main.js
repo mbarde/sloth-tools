@@ -38,6 +38,7 @@ function checkSwitch(el, event) {
     var nodeLiEl = el.parentElement.parentElement
     if (nodeLiEl.classList.contains('slided')) {
       event.preventDefault()
+      event.stopPropagation()
       resolve()
       return
     }
@@ -101,7 +102,10 @@ function refreshNodes() {
 }
 
 function showPopupForm(type='node', clickEvent=false, objId=false, urlSuffix='') {
-  if (clickEvent) clickEvent.preventDefault()
+  if (clickEvent) {
+    clickEvent.preventDefault()
+    clickEvent.stopPropagation()
+  }
   document.getElementById('btn-add-node').style.display = 'none'
   var container = document.querySelector('div.popup .container')
   var url = `/${type}/create`
@@ -159,7 +163,10 @@ function submitForm(callback) {
 
 function deleteNode(clickEvent, nodeId, nodeTitle) {
   if (!confirm(`Do you really want to delete node "${nodeTitle}"?`)) return
-  if (clickEvent) clickEvent.preventDefault()
+  if (clickEvent) {
+    clickEvent.preventDefault()
+    clickEvent.stopPropagation()
+  }
   var url = '/node/delete/' + nodeId
   var xhttp = new XMLHttpRequest()
   xhttp.open('DELETE', url)
