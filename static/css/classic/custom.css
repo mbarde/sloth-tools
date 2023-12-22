@@ -123,7 +123,7 @@ ul.nodes {
 ul.nodes li.node {
   margin-bottom: 15px;
   overflow: hidden;
-  width: calc(100% + 135px);
+  width: calc(100% + 142px);
 }
 
 ul.nodes li.node.disabled {
@@ -215,14 +215,14 @@ li.event ul.weekdays li:hover {
     background: transparent;
   }
   to {
-    transform: translateX(-135px);
+    transform: translateX(-142px);
     background: #D5ECC9;
   }
 }
 
 @keyframes slideback {
   from {
-    transform: translateX(-135px);
+    transform: translateX(-142px);
     background: #D5ECC9;
   }
   to {
