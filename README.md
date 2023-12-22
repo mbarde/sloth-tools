@@ -40,7 +40,7 @@ Database then lives in `database.sqlite`. To reset database, delete this file an
 
 ## Migrate to v1.0.0
 
-(see https://github.com/mbarde/sloth-tools/issues/11)
+(see https://github.com/mbarde/sloth-tools/releases/tag/v1.0.0)
 
 ```
 export FLASK_APP=server.py
