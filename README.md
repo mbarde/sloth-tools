@@ -37,6 +37,17 @@ flask init-db
 
 Database then lives in `database.sqlite`. To reset database, delete this file and run `init-db` again.
 
+
+## Migrate to v.1.0.0
+
+(see https://github.com/mbarde/sloth-tools/issues/11)
+
+```
+export FLASK_APP=server.py
+flask migrate-to-v1
+```
+
+
 ## Run in dev mode
 
 ```
@@ -81,6 +92,7 @@ Enable:
 sudo systemctl enable homecontrol.service
 ```
 
+
 ## API
 
 Once running you can access Sloth Tools via the provided web application. But you can also directly interact with the backend by calling certain endpoints:
@@ -99,6 +111,3 @@ For example you could use following script to blink node 42 everytime a motion i
 #!/bin/sh
 wget -O/dev/null 192.168.0.13:5000/toggle?id=42 -q
 ```
-
-
-

@@ -2,5 +2,5 @@ from setuptools import setup
 
 setup(
     name='sloth-tools',
-    version='0.9.0',
+    version='1.0.0',
 )

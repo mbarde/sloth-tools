@@ -87,6 +87,10 @@ button.transparent {
   background: none;
 }
 
+button.invisible {
+  visibility: hidden;
+}
+
 #jobs-container {
   background: rgba(0.2, 0.2, 0.2, 0.2);
   color: black;
@@ -123,7 +127,7 @@ ul.nodes {
 ul.nodes li.node {
   margin-bottom: 15px;
   overflow: hidden;
-  width: calc(100% + 142px);
+  width: calc(100% + 229px);
 }
 
 ul.nodes li.node.disabled {
@@ -215,14 +219,14 @@ li.event ul.weekdays li:hover {
     background: transparent;
   }
   to {
-    transform: translateX(-142px);
+    transform: translateX(-229px);
     background: #D5ECC9;
   }
 }
 
 @keyframes slideback {
   from {
-    transform: translateX(-142px);
+    transform: translateX(-229px);
     background: #D5ECC9;
   }
   to {

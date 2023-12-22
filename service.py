@@ -51,9 +51,12 @@ class CRUDService:
         conn.commit()
         return True
 
-    def readAll(self):
+    def readAll(self, order_by=None, order_mode='ASC'):
         conn = db.get_db()
         sql = 'SELECT * FROM {0}'.format(self.tableName)
+        if order_by is not None:
+            sql += ' ORDER BY {0} {1};'.format(
+                order_by, order_mode)
         results = conn.execute(sql).fetchall()
         return results
 
@@ -100,3 +103,9 @@ class CRUDService:
         conn.execute(sql, (id,))
         conn.commit()
         return True
+
+    def countRows(self):
+        conn = db.get_db()
+        query = 'SELECT COUNT(*) FROM {0};'.format(self.tableName)
+        conn.execute(query)
+        return conn.fetchone()[0]

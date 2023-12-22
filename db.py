@@ -30,6 +30,37 @@ def init_db():
         db.executescript(f.read().decode('utf8'))
 
 
+@click.command('migrate-to-v1')
+@with_appcontext
+def migrate_to_v1():
+    # version 1.0.0 introduces sorting feature for nodes,
+    # which depends on additional field `sort_order`
+    # in `node` table.
+    db = get_db()
+
+    cursor = db.cursor()
+    cursor.execute('PRAGMA table_info(node);')
+    columns_info = cursor.fetchall()
+    columns_names = [c['name'] for c in columns_info]
+
+    if 'sort_order' not in columns_names:
+        click.echo('Adding missing field `sort_order` to table `node`.')
+        cursor.execute('ALTER TABLE `node` ADD `sort_order` INTEGER NOT NULL;')
+
+        cursor.execute('CREATE UNIQUE INDEX `idx_unique_sort_order` ON `node` (`sort_order`);')
+
+        click.echo('Initializing new field `sort_order` with node ID.')
+        query = 'UPDATE node SET "sort_order" = id;'
+        cursor.execute(query)
+        db.commit()
+
+    cursor.close()
+
+    # we have to stop timer manually here
+    # otherwise process will run forever
+    current_app.eventTable.stopTimer()
+
+
 @click.command('init-db')
 @with_appcontext
 def init_db_command():
@@ -44,3 +75,4 @@ def init_db_command():
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
+    app.cli.add_command(migrate_to_v1)

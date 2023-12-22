@@ -138,7 +138,8 @@ def create_app():
     @app.route('/nodes')
     def nodes():
         nodeService = CRUDService('node')
-        nodes = nodeService.read()
+        nodes = nodeService.readAll(
+            order_by='sort_order', order_mode='ASC')
         return render_template('./nodes.html', nodes=nodes)
 
     @app.route('/node/create', methods=['GET', 'POST'])
@@ -150,6 +151,15 @@ def create_app():
 
         if jsonData is not None:
             node = jsonData
+
+            # get currently highest sort_order value
+            allNodes = nodeService.readAll(order_by='sort_order', order_mode='DESC')
+            if len(allNodes) > 0:
+                # to make sure new node is appended at the end
+                node['sort_order'] = allNodes[0]['sort_order'] + 1
+            else:
+                node['sort_order'] = 0
+
             if nodeService.create(node):
                 return 'OK'
 
@@ -194,6 +204,25 @@ def create_app():
     def nodeDelete(id):
         nodeService = CRUDService('node')
         nodeService.delete(id)
+        return 'OK'
+
+    @app.route('/node/reorder/<int:posFrom>/<int:posTo>', methods=['POST'])
+    def nodeReorder(posFrom, posTo):
+        # flips sort_order positions of two nodes
+        nodeService = CRUDService('node')
+
+        nodeFrom = dict(nodeService.readBy('sort_order', posFrom)[0])
+        nodeTo = dict(nodeService.readBy('sort_order', posTo)[0])
+
+        nodeTo['sort_order'] = -1
+        nodeService.update(nodeTo)
+
+        nodeFrom['sort_order'] = posTo
+        nodeService.update(nodeFrom)
+
+        nodeTo['sort_order'] = posFrom
+        nodeService.update(nodeTo)
+
         return 'OK'
 
     # event API

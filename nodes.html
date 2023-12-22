@@ -13,6 +13,16 @@
       <button title="Delete node" onclick="deleteNode(event, {{ node.id }}, '{{ node.title }}')" class="transparent">🗑️</button>
       <button title="Edit node" onclick="showPopupForm('node', event, {{ node.id }})" class="transparent">🖊️</button>
       <button title="Edit events" onclick="showEventList({{ node.id }}, event)" class="transparent">📅</button>
+      {% if loop.index > 1 %}
+      <button title="Move node up" onclick="reorderNodes({{ node.sort_order }}, {{ node.sort_order }} - 1)" class="transparent">↑</button>
+      {% else %}
+      <button class="invisible">↑</button>
+      {% endif %}
+      {% if loop.index < nodes | length %}
+      <button title="Move node down" onclick="reorderNodes({{ node.sort_order }}, {{ node.sort_order }} + 1)" class="transparent">↓</button>
+      {% else %}
+      <button class="invisible">↓</button>
+      {% endif %}
     <div>
   </li>
   {% endfor %}

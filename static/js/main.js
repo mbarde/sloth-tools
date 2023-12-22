@@ -177,6 +177,16 @@ function deleteNode(clickEvent, nodeId, nodeTitle) {
   return false
 }
 
+function reorderNodes(posFrom, posTo) {
+  var url = '/node/reorder/' + posFrom + '/' + posTo
+  var xhttp = new XMLHttpRequest()
+  xhttp.open('POST', url)
+  xhttp.addEventListener('load', function() {
+    refreshNodes()
+  })
+  xhttp.send()
+}
+
 function onToolClicked(element, event) {
   event.preventDefault()
   event.stopPropagation()
