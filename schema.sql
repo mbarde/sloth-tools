@@ -6,7 +6,8 @@ CREATE TABLE node (
   protocol TEXT DEFAULT 0,
   pulselength TEXT DEFAULT 0,
   iterations INTEGER,
-  state BOOLEAN DEFAULT FALSE
+  state BOOLEAN DEFAULT FALSE,
+  sort_order INTEGER NOT NULL UNIQUE
 );
 
 CREATE TABLE event (
