@@ -38,7 +38,7 @@ flask init-db
 Database then lives in `database.sqlite`. To reset database, delete this file and run `init-db` again.
 
 
-## Migrate to v.1.0.0
+## Migrate to v1.0.0
 
 (see https://github.com/mbarde/sloth-tools/issues/11)
 
