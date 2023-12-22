@@ -89,7 +89,6 @@ class CRUDService:
         sql = 'UPDATE {0} SET {1} WHERE {2} = :{2};'.format(
             self.tableName, ', '.join(keysAndPlaceholders), self.primaryKey
         )
-        print(sql)
         conn.execute(sql, data)
         conn.commit()
         return True
