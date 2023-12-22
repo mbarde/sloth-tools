@@ -38,15 +38,21 @@
   font-size: 65%;
 }
 
+html {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 body {
   margin: 0;
   font-family: 'Barlow', sans-serif;
   overflow-x: hidden;
+  width: 100%;
 }
 
 .container-fluid {
-  width: 100%;
   overflow-x: hidden;
+  width: 100%;
 }
 
 button {
@@ -117,6 +123,7 @@ ul.nodes {
 ul.nodes li.node {
   margin-bottom: 15px;
   overflow: hidden;
+  width: calc(100% + 135px);
 }
 
 ul.nodes li.node.disabled {
@@ -124,36 +131,30 @@ ul.nodes li.node.disabled {
   cursor: default;
 }
 
-ul.nodes li .tool {
-  display: inline-block;
-  cursor: pointer;
-  margin-top: 15px;
-  margin-right: 20px;
-  position: absolute;
-  right: 0;
-}
-
-ul.nodes li .tool:hover {
-  opacity: 0.8;
-}
-
-ul.nodes li .hidden-tools {
-  display: none;
-  position: absolute;
-  right: 0;
-}
-
-ul.nodes li .hidden-tools button {
-  font-size: 25px;
+ul.nodes li .tools {
   float: right;
+  margin-right: 10px;
+}
+
+ul.nodes li .tools button {
+  display: inline-block;
+  font-size: 25px;
 }
 
 ul.nodes li.slided {
   animation: slideleft 1.0s forwards;
 }
 
+ul.nodes li.slided .toggle-tools {
+  animation: fadeOut 1.0s forwards;
+}
+
 ul.nodes li.unslided {
   animation: slideback 1.0s forwards;
+}
+
+ul.nodes li.unslided .toggle-tools {
+  animation: fadeIn 1.0s forwards;
 }
 
 ul.events {
@@ -210,23 +211,41 @@ li.event ul.weekdays li:hover {
 
 @keyframes slideleft {
   from {
-    margin-left: 0;
+    transform: translateX(0px);
     background: transparent;
   }
   to {
-    margin-left: -100px;
+    transform: translateX(-135px);
     background: #D5ECC9;
   }
 }
 
 @keyframes slideback {
   from {
-    margin-left: -100px;
+    transform: translateX(-135px);
     background: #D5ECC9;
   }
   to {
-    margin-left: 0;
+    transform: translateX(0px);
     background: transparent;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 

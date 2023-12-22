@@ -181,16 +181,12 @@ function onToolClicked(element, event) {
   event.preventDefault()
   event.stopPropagation()
   unslideAll()
-  element.style.display = 'none'
-  var liElement = element.parentElement
+  var liElement = element.parentElement.parentElement
   slideLi(liElement)
   return false
 }
 
 function slideLi(liElement) {
-  var hiddenTools = liElement.getElementsByClassName('hidden-tools')[0]
-  hiddenTools.style.display = 'inline-block'
-  animateCSSElement(hiddenTools, 'slideInRight')
   liElement.classList.remove('unslided')
   liElement.classList.add('slided')
 }
@@ -198,14 +194,6 @@ function slideLi(liElement) {
 function unslideLi(liElement) {
   liElement.classList.remove('slided')
   liElement.classList.add('unslided')
-  var tool = liElement.getElementsByClassName('tool')[0]
-  tool.style.display = 'inline-block'
-  var hiddenTools = liElement.getElementsByClassName('hidden-tools')[0]
-  hiddenTools.style.marginRight = '-45px'
-  animateCSSElement(hiddenTools, 'slideOutRight', function() {
-    hiddenTools.style.display = 'none'
-    hiddenTools.style.marginRight = '0'
-  })
 }
 
 function unslideAll() {

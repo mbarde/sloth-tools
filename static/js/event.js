@@ -11,7 +11,11 @@ function deleteEvent(clickEvent, eventId, eventTitle, nodeId) {
   return false
 }
 
-function showEventList(nodeId) {
+function showEventList(nodeId, clickEvent=false) {
+  if (clickEvent) {
+    clickEvent.preventDefault()
+    clickEvent.stopPropagation()
+  }
   var container = document.querySelector('div.popup .container')
   var url = '/event/bynode/' + nodeId
   var xhttp = new XMLHttpRequest()
