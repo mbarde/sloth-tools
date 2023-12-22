@@ -45,8 +45,7 @@ def migrate_to_v1():
 
     if 'sort_order' not in columns_names:
         click.echo('Adding missing field `sort_order` to table `node`.')
-        cursor.execute('ALTER TABLE `node` ADD `sort_order` INTEGER NOT NULL;')
-
+        cursor.execute('ALTER TABLE `node` ADD `sort_order` INTEGER;')
         cursor.execute('CREATE UNIQUE INDEX `idx_unique_sort_order` ON `node` (`sort_order`);')
 
         click.echo('Initializing new field `sort_order` with node ID.')
