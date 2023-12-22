@@ -18,12 +18,10 @@
   </li>
   {% endfor %}
 </ul>
-<div>
-  <button id="btn-add-event" class="button half-width float-left"
-          onclick="showPopupForm('event', false, false, '/{{node.id}}')">➕ Add event
-  </button>
-  <button class="btn-close danger button half-width float-left" type="button"
-          onclick="hidePopupForm()">Close
-  </button>
-</div>
+<button id="btn-add-event" class="button half-width float-left"
+        onclick="showPopupForm('event', false, false, '/{{node.id}}')">➕ Add event
+</button>
+<button class="btn-close danger button half-width float-left" type="button"
+        onclick="hidePopupForm()">Close
+</button>
 <br style="clear:both"/>
