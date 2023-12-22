@@ -35,6 +35,7 @@ export FLASK_APP=server.py
 flask init-db
 ```
 
+Database then lives in `database.sqlite`. To reset database, delete this file and run `init-db` again.
 
 ## Run in dev mode
 
